@@ -11,7 +11,6 @@ npm init -y
 2. Append to `package.json` , then `npm install`
 
 ```json
-{
     "devDependencies": {
         "@babel/cli": "^7.24.7",
         "@babel/core": "^7.24.7",
@@ -26,7 +25,6 @@ npm init -y
         "cors": "^2.8.5",
         "express": "^4.19.2"
     }
-}
 ```
 
 3. Create the `.babelrc` file with the below content in the root directory
