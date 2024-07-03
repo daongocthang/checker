@@ -8,7 +8,7 @@
 npm init -y
 ```
 
-2. Append to `package.json` , then `npm install`
+2. Append the below content into `package.json` , then `npm install`
 
 ```json
     "devDependencies": {
