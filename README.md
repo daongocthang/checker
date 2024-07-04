@@ -1,4 +1,4 @@
-# Let's set up an Express.js app with ES6
+# Let's set up TypeScript with Node.js and Express
 
 ### Prerequisites
 
@@ -8,40 +8,64 @@
 npm init -y
 ```
 
-2. Append the below content into `package.json` , then `npm install`
+2. Installing TypeScript
 
-```json
-    "devDependencies": {
-        "@babel/cli": "^7.24.7",
-        "@babel/core": "^7.24.7",
-        "@babel/node": "^7.24.7",
-        "@babel/preset-env": "^7.24.7",
-        "node-sass": "^9.0.0",
-        "node-windows": "^1.0.0-beta.8",
-        "nodemon": "^3.0.1"
-    },
-    "dependencies": {
-        "babel-plugin-module-resolver": "^5.0.2",
-        "cors": "^2.8.5",
-        "express": "^4.19.2"
-    }
-```
+`npm i -D typescript @types/express @types/node`
 
-3. Create the `.babelrc` file with the below content in the root directory
+After installed these packages, featuring version details for each packages, as shown below:
 
 ```json
 {
-    "presets": ["@babel/preset-env"],
-    "plugins": [
-        [
-            "module-resolver",
-            {
-                "alias": {
-                    "~": "./src"
-                }
-            }
-        ]
-    ],
-    "ignore": ["**/public/static"]
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.14.9",
+        "typescript": "^5.5.3"
+    }
+}
+```
+
+3. Generating tsconfig.json
+
+    `npx tsc --init`
+
+By default, the value of this option is set to the root directory. Change it to `dist`, as shown below:
+
+```json
+{
+    "compilerOptions": {
+        "outDir": "./dist"
+    }
+}
+```
+
+4. Create an Express server with a .ts extionsion
+
+The `.ts` extension indicates a TypeScript file, and it will be compiled into JavaScript when we build the appliaction later.
+
+5. Running TypeScript in Node with ts-node
+
+Let's first use `npx ts-node` without installing it as a dependency.
+
+```sh
+npx ts-node src/index.ts
+```
+
+6. Watching file changes
+
+Execute the following command to integrate `nodemon` and `ts-node` as development dependencies
+
+```sh
+npm i -D nodemon ts-node
+```
+
+After installing these dev dependencies, update the `scripts` in the `package.json` file as follows:
+
+```json
+{
+    "scripts": {
+        "build": "npx tsc",
+        "start": "node dist/index.js",
+        "dev": "nodemon src/index.ts"
+    }
 }
 ```
