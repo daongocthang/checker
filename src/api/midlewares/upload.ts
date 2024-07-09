@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import multer, { FileFilterCallback } from 'multer';
 import fs from 'fs';
+import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import '../../types';
 
