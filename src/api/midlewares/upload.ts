@@ -1,8 +1,8 @@
 import { Request } from 'express';
 import fs from 'fs';
 import multer, { FileFilterCallback } from 'multer';
-import path from 'path';
 import '../../types';
+import { UPLOADS_DIR } from '../config';
 
 const xlFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
     if (file.mimetype.includes('excel') || file.mimetype.includes('spreadsheetml')) {
@@ -14,12 +14,11 @@ const xlFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallbac
 
 const diskStorage = multer.diskStorage({
     destination(req, file, cb) {
-        const uploadPath = path.join(global.publicDir, 'uploads');
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath);
+        if (!fs.existsSync(UPLOADS_DIR)) {
+            fs.mkdirSync(UPLOADS_DIR);
         }
 
-        cb(null, uploadPath);
+        cb(null, UPLOADS_DIR);
     },
     filename(req, file, cb) {
         cb(null, `${Date.now()}-${file.originalname}`);

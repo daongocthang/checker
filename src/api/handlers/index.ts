@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import readXlsxFile from 'read-excel-file/node';
-import { Err, HttpStatus } from '../../../constants';
+import { Err, HttpStatus } from '../../constants';
+import { UPLOADS_DIR } from '../config';
 import { MapOptions } from './mapper';
 
 const DTO = { 'Mã thiết bị': 'model', IMEI: 'serial' };
@@ -11,7 +12,7 @@ export async function handleXlsxFile(req: Request, res: Response) {
         return res.status(HttpStatus.BAD_REQUEST).json({ message: Err.FILE_NOT_FOUND });
     }
     try {
-        const filename = path.join(global.publicDir, 'uploads', req.file.filename);
+        const filename = path.join(UPLOADS_DIR, req.file.filename);
         const { rows } = await readXlsxFile(fs.createReadStream(filename), new MapOptions(DTO, 10));
         res.status(HttpStatus.OK).json(rows);
     } catch (e) {
