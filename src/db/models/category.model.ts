@@ -7,21 +7,21 @@ enum SerialType {
     NONE = 'none',
 }
 
-export type WarrantyCategoryAttrs = {
+export type CategoryAttrs = {
     id: number;
     model: string;
     serialType: SerialType;
 };
 
-export type WarrantyCreationAttrs = Optional<WarrantyCategoryAttrs, 'id'>;
+export type CategoryCreationAttrs = Optional<CategoryAttrs, 'id'>;
 
-class WarrantyCategory extends Model<WarrantyCategoryAttrs, WarrantyCreationAttrs> implements WarrantyCategoryAttrs {
+class Category extends Model<CategoryAttrs, CategoryCreationAttrs> implements CategoryAttrs {
     declare id: number;
     declare model: string;
     declare serialType: SerialType;
 }
 
-WarrantyCategory.init(
+Category.init(
     {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
@@ -31,6 +31,7 @@ WarrantyCategory.init(
         model: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         serialType: {
             type: DataTypes.ENUM,
@@ -40,7 +41,9 @@ WarrantyCategory.init(
     },
     {
         sequelize: sequelizeConnection,
+        tableName: 'warr_categories',
+        timestamps: false,
     },
 );
 
-export { WarrantyCategory };
+export default Category;

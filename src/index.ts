@@ -1,13 +1,9 @@
-import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-import * as dotenv from 'dotenv';
-import '../src/types';
-import productRouter from './api/routes/warranty.routes';
-import { xlUpload } from './api/midlewares/upload';
+import express, { Express, Request, Response } from 'express';
+import warrantyRouter from './api/routes/warranty.routes';
+import dbInit from './db';
 
-dotenv.config();
-
-global.publicDir = __dirname + '/public';
+dbInit();
 
 const app: Express = express();
 app.use(cors());
@@ -18,9 +14,9 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server');
 });
 
-app.use('/api/v1', productRouter);
+app.use('/api/v1', warrantyRouter);
 
-const PORT = 5000;
+const PORT = parseInt(process.env.NODE_PORT as string) || 5000;
 app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });

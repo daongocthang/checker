@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import fs from 'fs';
 import multer, { FileFilterCallback } from 'multer';
-import '../../types';
 import { UPLOADS_DIR } from '../config';
 
 const xlFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {

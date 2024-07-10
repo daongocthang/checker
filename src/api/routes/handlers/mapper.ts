@@ -1,5 +1,5 @@
 import { MapObject, ParseWithMapOptions, Row } from 'read-excel-file/types';
-import { range } from '../../utils';
+import { range } from '../../../utils';
 export class MapOptions implements ParseWithMapOptions {
     offset: number;
     map: MapObject;

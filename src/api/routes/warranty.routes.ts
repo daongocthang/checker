@@ -1,13 +1,12 @@
 import { Request, Response, Router } from 'express';
-import '../../types';
-import { readXlsxFile as handleUpload } from '../handlers';
 import { xlUpload } from '../midlewares/upload';
-const productRouter = Router();
+import { handleXlsxFile } from './handlers';
+const warrantyRouter = Router();
 
-productRouter.get('/', (req: Request, res: Response) => {
+warrantyRouter.get('/', (req: Request, res: Response) => {
     res.json({ message: 'Hello' });
 });
 
-productRouter.post('/', xlUpload.single('file'), handleUpload);
+warrantyRouter.post('/', xlUpload.single('file'), handleXlsxFile);
 
-export default productRouter;
+export default warrantyRouter;

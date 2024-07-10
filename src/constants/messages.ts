@@ -1,3 +1,3 @@
 export enum Err {
-    FILE_NOT_FOUND = 'File not found',
+    NOT_FOUND = 'Not Found',
 }

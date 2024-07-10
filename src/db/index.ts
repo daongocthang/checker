@@ -1,9 +1,10 @@
-import { WarrantyCategory } from './models/warranty.model';
+import Category from './models/category.model';
 
 const developing = process.env.NODE_ENV === 'development';
 
 const dbInit = () => {
-    WarrantyCategory.sync({ alter: developing });
+    // console.log(process.env.NODE_ENV);
+    Category.sync({ alter: developing });
 };
 
 export default dbInit;

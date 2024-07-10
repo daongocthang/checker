@@ -1,13 +1,13 @@
-import { WarrantyCategoryAttrs } from '../models/warranty.model';
+import { CategoryAttrs } from '../models/category.model';
 
 declare namespace dal {
     interface WarrantyCategoryDAL {
-        create(payload: WarrantyCategoryAttrs): Promise<void>;
-        bulkCreate(payloads: WarrantyCategoryAttrs[]): Promise<void>;
-        update(id: number, payload: WarrantyCategoryAttrs): Promise<void>;
+        create(payload: CategoryAttrs): Promise<void>;
+        bulkCreate(payloads: CategoryAttrs[]): Promise<void>;
+        update(id: number, payload: CategoryAttrs): Promise<void>;
         remove(id: number): Promise<boolean>;
         removeAll(): Promise<boolean>;
-        find(id: number): Promise<WarrantyCategoryAttrs | null>;
-        findAll(constraints: {}): Promise<WarrantyCategoryAttrs[]>;
+        find(id: number): Promise<CategoryAttrs | null>;
+        findAll(constraints: {}): Promise<CategoryAttrs[]>;
     }
 }
