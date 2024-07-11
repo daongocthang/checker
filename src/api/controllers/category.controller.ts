@@ -7,13 +7,23 @@ import { MapOptions } from '../types';
 
 export const bulkCreate = async (filename: string) => {
     const { rows } = await readXlsxFile<CategoryAttrs>(fromFile(filename), new MapOptions(CategoryMapObject));
-    console.log(rows);
-
-    categoryDAL.bulkCreate(rows);
+    return await categoryDAL.bulkCreate(rows);
 };
 
 export const create = async (payload: CategoryAttrs) => {
-    await categoryDAL.createOrUpdate(payload);
+    return await categoryDAL.create(payload);
+};
+
+export const update = async (model: string, payload: CategoryAttrs) => {
+    return await categoryDAL.update(model, payload);
+};
+
+export const removeAll = async () => {
+    return await categoryDAL.removeAll();
+};
+
+export const remove = async (model: string) => {
+    return await categoryDAL.removeByModel(model);
 };
 
 export const findAll = async () => {

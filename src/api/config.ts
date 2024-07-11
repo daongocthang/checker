@@ -5,7 +5,7 @@ export const UPLOADS_DIR = path.resolve('./src/public/uploads');
 
 export const PATTERNS = ['Chờ CM lên cấp trên', 'Đã CM cấp trên chưa tiếp nhận', 'Đang sửa'];
 
-export const TransactionMapObject: MapObject = {
+export const ReceivedTransMapObject: MapObject = {
     'Phiếu tiếp nhận': 'ticket',
     IMEI: 'serial',
     'Mã thiết bị': 'model',

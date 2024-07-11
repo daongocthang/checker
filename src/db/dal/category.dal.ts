@@ -1,24 +1,20 @@
-import { Err } from '../../constants';
 import Category, { CategoryAttrs } from '../models/category.model';
 
-export const bulkCreate = async (payloads: CategoryAttrs[]): Promise<void> => {
-    await Category.bulkCreate(payloads, { ignoreDuplicates: true });
-};
-export const create = async (payload: CategoryAttrs) => {
-    const cat = findByModel(payload.model);
-    if (cat === null) {
-        await Category.create(payload);
-    } else {
-        await (cat as unknown as Category).update(payload);
-    }
+export const bulkCreate = async (payloads: CategoryAttrs[]) => {
+    return await Category.bulkCreate(payloads, { ignoreDuplicates: true });
 };
 
-export const update = async (id: number, payload: CategoryAttrs) => {
-    const cat = Category.findByPk(id);
+export const create = async (payload: CategoryAttrs) => {
+    return await Category.create(payload);
+};
+
+export const update = async (model: string, payload: CategoryAttrs) => {
+    const cat = await findByModel(model);
     if (cat === null) {
-        throw new Error(`${model} ${Err.NOT_FOUND}`);
-    } else {
+        throw new Error('Not found');
     }
+
+    return await (cat as unknown as Category).update(payload);
 };
 
 export const removeByModel = async (model: string) => {
