@@ -1,11 +1,16 @@
-import fs from 'fs';
-import path from 'path';
 import readXlsxFile from 'read-excel-file/node';
-import { MapObject } from 'read-excel-file/types';
-import { UPLOADS_DIR } from '../config';
-import { MapOptions } from './mapper';
+import * as categoryDAL from '../../db/dal/category.dal';
+import { CategoryAttrs } from '../../db/models/category.model';
+import { fromFile, removeFile } from '../../utils';
+import { CategoryMapObject } from '../config';
+import { MapOptions } from '../types';
 
-export const bulkCreate = async (filename: string, mapObject: MapObject) => {
-    const filePath = path.join(UPLOADS_DIR, filename);
-    const { rows } = await readXlsxFile(fs.createReadStream(filePath), new MapOptions(mapObject));
+export const bulkCreate = async (filename: string) => {
+    const { rows } = await readXlsxFile<CategoryAttrs>(fromFile(filename), new MapOptions(CategoryMapObject));
+    categoryDAL.bulkCreate(rows);
+    removeFile(filename);
+};
+
+export const findAll = async () => {
+    return await categoryDAL.findAll();
 };

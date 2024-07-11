@@ -1,5 +1,11 @@
-import { MapObject, ParseWithMapOptions, Row } from 'read-excel-file/types';
-import { range } from '../../../utils';
+import { Row } from 'read-excel-file';
+import { MapObject, ParseWithMapOptions } from 'read-excel-file/types';
+import { range } from '../utils';
+
+export declare namespace API {
+    type FileCallback = (file: Express.Multer.File) => void;
+}
+
 export class MapOptions implements ParseWithMapOptions {
     offset: number;
     map: MapObject;

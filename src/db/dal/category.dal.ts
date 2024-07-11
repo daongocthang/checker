@@ -24,3 +24,7 @@ export const findByModel = async (model: string) => {
     const constraints = { model };
     return await Category.findOne({ where: constraints });
 };
+
+export const findAll = async (constants?: object) => {
+    return await Category.findAll({ where: { ...constants } });
+};

@@ -1,3 +1,7 @@
 export enum Err {
-    NOT_FOUND = 'Not Found',
+    FILE_NOT_FOUND = 'Not Found',
+}
+
+export enum Ok {
+    UPLOAD_COMPLETE = 'Upload Complete',
 }

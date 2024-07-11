@@ -1,4 +1,4 @@
 import { HttpStatus } from './httpstatus';
-import { Err } from './messages';
+import { Err, Ok } from './messages';
 
-export { HttpStatus, Err };
+export { Err, HttpStatus, Ok };

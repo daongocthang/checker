@@ -9,8 +9,6 @@ const dbHost = process.env.DB_HOST;
 const dbDriver = process.env.DB_DRIVER as Dialect;
 const dbPassword = process.env.DB_PASSWORD;
 
-console.log(process.env.NODE_ENV);
-
 const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
     host: dbHost,
     dialect: dbDriver,

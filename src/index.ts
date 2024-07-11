@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, { Express, Request, Response } from 'express';
-import warrantyRouter from './api/routes/warranty.routes';
+import router from './api/routes';
 import dbInit from './db';
 
 dbInit();
@@ -14,7 +14,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server');
 });
 
-app.use('/api/v1', warrantyRouter);
+app.use('/api/v1', router);
 
 const PORT = parseInt(process.env.NODE_PORT as string) || 5000;
 app.listen(PORT, () => {

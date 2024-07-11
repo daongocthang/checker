@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import warrantyRouter from './warranty.routes';
+import categoryRouter from './category.routes';
 
 const router = Router();
-router.use('/warranty', warrantyRouter);
+router.use('/category', categoryRouter);
 
 export default router;
