@@ -12,6 +12,10 @@ export const bulkCreate = async (filename: string) => {
     categoryDAL.bulkCreate(rows);
 };
 
+export const create = async (payload: CategoryAttrs) => {
+    await categoryDAL.createOrUpdate(payload);
+};
+
 export const findAll = async () => {
     return await categoryDAL.findAll();
 };

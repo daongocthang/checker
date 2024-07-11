@@ -5,7 +5,7 @@ import { API } from '../types';
 
 export async function handleSingleUpload(req: Request, res: Response, cb: API.FileCallback) {
     if (req.file === undefined) {
-        return res.status(HttpStatus.BAD_REQUEST).json({ message: Err.FILE_NOT_FOUND });
+        return res.status(HttpStatus.BAD_REQUEST).json({ message: `File ${Err.NOT_FOUND}` });
     }
     try {
         await cb(req.file);

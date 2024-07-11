@@ -1,9 +1,10 @@
+import { Err } from '../../constants';
 import Category, { CategoryAttrs } from '../models/category.model';
 
 export const bulkCreate = async (payloads: CategoryAttrs[]): Promise<void> => {
     await Category.bulkCreate(payloads, { ignoreDuplicates: true });
 };
-export const createOrUpdate = async (payload: CategoryAttrs) => {
+export const create = async (payload: CategoryAttrs) => {
     const cat = findByModel(payload.model);
     if (cat === null) {
         await Category.create(payload);
@@ -11,6 +12,15 @@ export const createOrUpdate = async (payload: CategoryAttrs) => {
         await (cat as unknown as Category).update(payload);
     }
 };
+
+export const update = async (id: number, payload: CategoryAttrs) => {
+    const cat = Category.findByPk(id);
+    if (cat === null) {
+        throw new Error(`${model} ${Err.NOT_FOUND}`);
+    } else {
+    }
+};
+
 export const removeByModel = async (model: string) => {
     const constraints = { model };
     const delCategoryCount = await Category.destroy({ where: constraints });
