@@ -4,7 +4,7 @@ import sequelizeConnection from '../config';
 enum SerialType {
     SOLID = 'solid',
     HEAD = 'head',
-    NONE = 'none',
+    ALL = 'all',
 }
 
 export type CategoryAttrs = {
@@ -36,7 +36,7 @@ Category.init(
         serialType: {
             type: DataTypes.ENUM,
             values: Object.values(SerialType),
-            defaultValue: SerialType.NONE,
+            defaultValue: SerialType.ALL,
         },
     },
     {

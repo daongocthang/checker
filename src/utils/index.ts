@@ -8,9 +8,3 @@ export const fromFile = (filename: string) => {
     const filePath = path.join(UPLOADS_DIR, filename);
     return fs.createReadStream(filePath);
 };
-
-export const removeFile = (filename: string) => {
-    if (fs.existsSync(filename)) {
-        fs.unlinkSync(filename);
-    }
-};

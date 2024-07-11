@@ -3,7 +3,7 @@ import { MapObject, ParseWithMapOptions } from 'read-excel-file/types';
 import { range } from '../utils';
 
 export declare namespace API {
-    type FileCallback = (file: Express.Multer.File) => void;
+    type FileCallback = (file: Express.Multer.File) => Promise<void>;
 }
 
 export class MapOptions implements ParseWithMapOptions {
