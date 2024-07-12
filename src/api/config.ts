@@ -10,7 +10,7 @@ export const ReceivedTransMapObject: MapObject = {
     IMEI: 'serial',
     'Mã thiết bị': 'model',
     'Mô tả lỗi của NV tiếp nhận': 'description',
-    'Trạng thái tiếp nhận': 'status',
+    'Trạng thái phiếu tiếp nhận': 'status',
 };
 
 export const CategoryMapObject: MapObject = {

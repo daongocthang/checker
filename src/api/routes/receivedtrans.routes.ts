@@ -6,17 +6,17 @@ import { handleSingleUpload } from './handlers';
 
 const router = Router();
 
-router.post('/upload', xlUpload.single('file'), async (req: Request, res: Response) => {
-    await handleSingleUpload(req, res, async (file: Express.Multer.File) => {
-        const rows = await receivedTransController.bulkCreate(file.fieldname);
-        res.status(HttpStatus.CREATED).send(rows);
+router.post('/upload', xlUpload.single('file'), (req: Request, res: Response) => {
+    handleSingleUpload(req, res, async (file: Express.Multer.File) => {
+        await receivedTransController.bulkCreate(file.filename);
     });
 });
 
 router.get('/', async (_: Request, res: Response) => {
-    const rows = await receivedTransController.getBySerial();
-    res.status(HttpStatus.OK).send(rows);
+    res.status(HttpStatus.OK).send();
 });
+
+router.put('/:serial', async (_: Request, res: Response) => {});
 
 router.delete('/', async (req: Request, res: Response) => {
     // delete transactions with unknown user
@@ -27,3 +27,5 @@ router.delete('/', async (req: Request, res: Response) => {
         res.status(HttpStatus.NO_CONTENT).send({ message: 'Failed to delete' });
     }
 });
+
+export default router;

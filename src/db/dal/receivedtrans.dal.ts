@@ -12,3 +12,7 @@ export const removeAll = async (constraints?: object) => {
 export const findAll = async (constraints?: object) => {
     return await ReceivedTrans.findAll({ where: { ...constraints } });
 };
+
+export const findOne = async (constraints?: object) => {
+    return await ReceivedTrans.findOne({ where: { ...constraints } });
+};

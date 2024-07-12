@@ -1,5 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, ForeignKey, Model, NonAttribute, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
+import User from './user.model';
 
 export type ReceivedTransAttrs = {
     ticket: string;
@@ -7,7 +8,9 @@ export type ReceivedTransAttrs = {
     serial: string;
     description: string;
     expired: boolean;
-    receiverId?: For;
+    userId: ForeignKey<User['id']>;
+
+    user?: NonAttribute<User>;
     status?: string;
 
     createdAt?: Date;
@@ -23,7 +26,7 @@ class ReceivedTrans extends Model<ReceivedTransAttrs, ReceivedTransCreationAttrs
     declare serial: string;
     declare description: string;
     declare expired: boolean;
-    declare receiverId: number;
+    declare userId: ForeignKey<User['id']>;
 
     // timestamp
     declare readonly createdAt: Date;
@@ -45,12 +48,13 @@ ReceivedTrans.init(
         serial: DataTypes.STRING,
         description: DataTypes.TEXT,
         expired: DataTypes.BOOLEAN,
-        receiverId: DataTypes.INTEGER,
     },
     {
         sequelize: sequelizeConnection,
         tableName: 'received_trans',
     },
 );
+
+ReceivedTrans.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 export default ReceivedTrans;

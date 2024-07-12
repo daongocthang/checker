@@ -10,16 +10,18 @@ export const bulkCreate = async (filename: string) => {
         fromFile(filename),
         new MapOptions(ReceivedTransMapObject, 10),
     );
-    const filteredRows = rows.filter((row) => {
-        PATTERNS.includes(row.status as string);
-    });
+
+    const filteredRows = rows.filter((row) => PATTERNS.indexOf(row.status as string) !== -1);
+
+    console.log(filteredRows);
 
     return await receivedTransDAL.bulkCreate(filteredRows);
 };
 
-export const getBySerial = async () => {
+export const getSerial = async (constraints?: object) => {
     return await receivedTransDAL.findAll();
 };
+
 export const getByUser = async () => {};
 
 export const removeAll = async (constraints?: object) => {

@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
-import ReceivedTrans from './receivedtrans.model';
 
 export type UserAttrs = {
     id: number;
@@ -28,9 +27,5 @@ User.init(
         timestamps: false,
     },
 );
-
-User.hasMany(ReceivedTrans, {
-    sourceKey: 'id',
-});
 
 export default User;

@@ -8,8 +8,8 @@ import { handleSingleUpload } from './handlers';
 
 const router = Router();
 
-router.post('/upload', xlUpload.single('file'), async (req: Request, res: Response) => {
-    await handleSingleUpload(req, res, async (file: Express.Multer.File) => {
+router.post('/upload', xlUpload.single('file'), (req: Request, res: Response) => {
+    handleSingleUpload(req, res, async (file: Express.Multer.File) => {
         await bulkCreate(file.filename);
     });
 });
