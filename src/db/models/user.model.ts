@@ -6,9 +6,10 @@ export type UserAttrs = {
     name: string;
 };
 
-export type UserCreationAttrs = Optional<UserAttrs, 'id'>;
+export type UserCreation = Optional<UserAttrs, 'id'>;
+export type UserResult = Required<UserAttrs>;
 
-class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
+class User extends Model<UserAttrs, UserCreation> implements UserAttrs {
     declare id: number;
     declare name: string;
 }

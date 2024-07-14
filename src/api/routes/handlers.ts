@@ -5,7 +5,7 @@ import { API } from '../types';
 
 export async function handleSingleUpload(req: Request, res: Response, cb: API.FileCallback) {
     if (req.file === undefined) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: 'File not found' });
+        return res.status(HttpStatus.BAD_REQUEST).json({ message: 'File not found' });
     }
     const file = req.file as Express.Multer.File;
     try {

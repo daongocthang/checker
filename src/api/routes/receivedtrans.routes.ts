@@ -12,19 +12,52 @@ router.post('/upload', xlUpload.single('file'), (req: Request, res: Response) =>
     });
 });
 
-router.get('/', async (_: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
     res.status(HttpStatus.OK).send();
 });
 
-router.put('/:serial', async (_: Request, res: Response) => {});
+router.post('/:date/serials/:serial', async (req: Request, res: Response) => {
+    const { date, serial } = req.params;
+    // const payload: object = req.body;
 
-router.delete('/', async (req: Request, res: Response) => {
-    // delete transactions with unknown user
-    const resultOK = false;
-    if (resultOK) {
-        res.status(HttpStatus.NO_CONTENT).send({ message: 'Deleted successfully' });
-    } else {
-        res.status(HttpStatus.NO_CONTENT).send({ message: 'Failed to delete' });
+    const strptime: Date = new Date(date);
+    try {
+        const trans = await receivedTransController.findOne({
+            createdAt: {
+                $gte: strptime,
+            },
+            serial,
+        });
+        if (trans === null) {
+            throw new Error('Not found');
+        }
+
+        const expired = await receivedTransController.isExpired(serial, trans.model);
+        trans.expired = expired;
+        const result = await receivedTransController.update(trans.ticket, trans);
+
+        res.status(HttpStatus.OK).send(result);
+    } catch (e) {
+        res.status(HttpStatus.BAD_REQUEST).send({ message: 'Not Found' });
+        console.log(e);
+    }
+});
+router.get('/:date/users/:user', async (req: Request, res: Response) => {
+    const { dt, user } = req.params;
+    console.log(dt, user);
+});
+
+router.delete('/null/users', async (req: Request, res: Response) => {
+    try {
+        const resultOK = await receivedTransController.removeAll({
+            userId: { $eq: null },
+        });
+        if (!resultOK) {
+            throw new Error('Failed to delete');
+        }
+        res.status(HttpStatus.OK).send({ message: 'Deleted successfully' });
+    } catch (e) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Failed to delete' });
     }
 });
 

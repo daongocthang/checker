@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <body>
+        <!-- main -->
+        <main>
+            <div class="form_login">
+                <form method="post" action="">
+                    <h2 class="text-center">Login</h2>
+                    <div class="form-group">
+                        <label class="sr-only" for="username">Username</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user"></i></div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Username" id="'username" />
+                        </div>
+                    </div>
+                    <div class="form-group mt-5">
+                        <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <%- include('../partials/footer') %>
+    </body>
+</html>

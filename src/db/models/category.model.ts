@@ -1,47 +1,31 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
 
-enum SerialType {
-    SOLID = 'solid',
-    HEAD = 'head',
-    ALL = 'all',
-}
-
 export type CategoryAttrs = {
-    id: number;
     model: string;
-    serialType: SerialType;
+    withSerial: boolean;
 };
 
-export type CategoryCreationAttrs = Optional<CategoryAttrs, 'id'>;
+export type CategoryCreation = Optional<CategoryAttrs, 'model'>;
+export type CategoryResult = Required<CategoryAttrs>;
 
-class Category extends Model<CategoryAttrs, CategoryCreationAttrs> implements CategoryAttrs {
-    declare id: number;
+class Category extends Model<CategoryAttrs, CategoryCreation> implements CategoryAttrs {
     declare model: string;
-    declare serialType: SerialType;
+    declare withSerial: boolean;
 }
 
 Category.init(
     {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
         model: {
             type: DataTypes.STRING,
+            primaryKey: true,
             allowNull: false,
-            unique: true,
         },
-        serialType: {
-            type: DataTypes.ENUM,
-            values: Object.values(SerialType),
-            defaultValue: SerialType.ALL,
-        },
+        withSerial: DataTypes.BOOLEAN,
     },
     {
         sequelize: sequelizeConnection,
-        tableName: 'warr_categories',
+        tableName: 'categories',
         timestamps: false,
     },
 );

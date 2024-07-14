@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import { HttpStatus } from '../../constants';
-import { CategoryAttrs } from '../../db/models/category.model';
 import * as categoryController from '../controllers/category.controller';
 import { bulkCreate } from '../controllers/category.controller';
 import { xlUpload } from '../midlewares/upload';
@@ -15,21 +14,26 @@ router.post('/upload', xlUpload.single('file'), (req: Request, res: Response) =>
 });
 
 router.post('/', async (req: Request, res: Response) => {
-    const cat: CategoryAttrs = req.body;
-    const result = await categoryController.create(cat);
-    res.status(HttpStatus.CREATED).send(result);
+    const cat = req.body;
+    try {
+        const result = await categoryController.create(cat);
+        res.status(HttpStatus.CREATED).send(result);
+    } catch (e) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('INTERNAL_SERVER_ERROR');
+        console.log(e);
+    }
 });
 
 router.put('/:model', async (req: Request, res: Response) => {
     const { model } = req.params;
-    if (model === undefined) {
+    try {
+        const payload = req.body;
+        const result = await categoryController.update(model, payload);
+
+        res.status(HttpStatus.OK).send(result);
+    } catch (e) {
         res.status(HttpStatus.NOT_FOUND).send({ message: req.params });
     }
-
-    const payload = req.body;
-    const result = await categoryController.update(model, payload);
-
-    res.status(HttpStatus.OK).send(result);
 });
 
 router.delete('/', async (req: Request, res: Response) => {

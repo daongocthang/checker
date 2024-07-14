@@ -1,20 +1,23 @@
+import bodyParser from 'body-parser';
 import cors from 'cors';
-import express, { Express, Request, Response } from 'express';
-import router from './api/routes';
-import dbInit from './db';
+import express, { Express } from 'express';
+import { STATIC_DIR, VIEWS_DIR } from '../src/client/config';
+import clientRouter from '../src/client/routes';
 
-dbInit();
+// dbInit();
 
 const app: Express = express();
+
+app.set('view engine', 'ejs');
+app.set('views', VIEWS_DIR);
+app.use(express.static(STATIC_DIR));
+
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
-});
-
-app.use('/api/v1', router);
+// app.use('/api/v1', router);
+app.use('/', clientRouter);
 
 const PORT = parseInt(process.env.NODE_PORT as string) || 5000;
 app.listen(PORT, () => {

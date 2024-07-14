@@ -1,0 +1,76 @@
+<%- include('../partials/navbar') %>
+<div class="mx-4">
+    <div>Welcome to EJS</div>
+    <!-- File Browser -->
+    <div class="custom-file">
+        <input id="xlupload" class="custom-file-input" type="file" name="" />
+        <label for="xlupload" class="custom-file-label">Choose Excel file</label>
+    </div>
+    <!-- Search Box -->
+    <form>
+        <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search..." />
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <!-- Data Table -->
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>Phiếu tiếp nhận</td>
+                <td>Mã thiết bị</td>
+                <td>SN</td>
+                <td>Mô tả lỗi</td>
+                <td>Bảo hành hãng</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="align-middle">TNNB.T066_1600530004.24/06.0005</td>
+                <td class="align-middle">TV360_ATV_SDMC_DV9135</td>
+                <td class="align-middle">SDMC10112200053588</td>
+                <td class="align-middle">hư tb</td>
+                <td class="align-middle">
+                    <div
+                        class="badge badge-success text-uppercase"
+                        style="padding-inline: 1.5em; padding-top: 0.8em; padding-bottom: 0.8em"
+                    >
+                        còn bh
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-middle">TNNB.T066_1600530004.24/06.0007</td>
+                <td class="align-middle">STB2C-NA1420v1</td>
+                <td class="align-middle">BI10574819501268</td>
+                <td class="align-middle">hỏng</td>
+                <td class="align-middle">
+                    <div
+                        class="badge badge-danger text-uppercase"
+                        style="padding-inline: 1.5em; padding-top: 0.8em; padding-bottom: 0.8em"
+                    >
+                        hết bh
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-middle">TNNB.T066_1600530004.24/06.0022</td>
+                <td class="align-middle">HWF_120WD</td>
+                <td class="align-middle">VTGRB1AD3AC4</td>
+                <td class="align-middle">lỗi tb</td>
+                <td class="align-middle">
+                    <div
+                        class="badge badge-success text-uppercase"
+                        style="padding-inline: 1.5em; padding-top: 0.8em; padding-bottom: 0.8em"
+                    >
+                        còn bh
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -5,8 +5,8 @@ export const create = async (payload: UserAttrs) => {
 };
 
 export const update = async (id: number, payload: UserAttrs) => {
-    const user = User.findByPk(id);
-    if (user === undefined) {
+    const user = await User.findByPk(id);
+    if (user === null) {
         throw new Error('User is not availble');
     }
 
@@ -21,7 +21,7 @@ export const getAll = async (constraints?: object) => {
     return await User.findAll({ where: { ...constraints } });
 };
 
-export const remove = (id: number) => {
-    const delCount = User.destroy({ where: { id } });
+export const remove = async (id: number) => {
+    const delCount = await User.destroy({ where: { id } });
     return !!delCount;
 };
