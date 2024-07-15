@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import cookieSession from 'cookie-session';
 import cors from 'cors';
 import express, { Express } from 'express';
 import { STATIC_DIR, VIEWS_DIR } from '../src/client/config';
@@ -15,6 +16,13 @@ app.use(express.static(STATIC_DIR));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(
+    cookieSession({
+        keys: ['abcd123'],
+        httpOnly: true,
+    }),
+);
 
 // app.use('/api/v1', router);
 app.use('/', clientRouter);
