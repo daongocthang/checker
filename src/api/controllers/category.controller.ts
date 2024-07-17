@@ -1,7 +1,7 @@
 import readXlsxFile from 'read-excel-file/node';
 import * as categoryDAL from '../../db/dal/category.dal';
 import { CategoryAttrs } from '../../db/models/category.model';
-import { fromFile } from '../../utils';
+import { fromFile } from '../../utils/stream.util';
 import { CategoryMapObject } from '../config';
 import { MapOptions } from '../types';
 import * as mapper from './mapper';

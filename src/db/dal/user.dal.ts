@@ -1,3 +1,4 @@
+import { WhereOptions } from 'sequelize';
 import User, { UserAttrs } from '../models/user.model';
 
 export const create = async (payload: UserAttrs) => {
@@ -17,8 +18,8 @@ export const getById = async (id: number) => {
     return await User.findByPk(id);
 };
 
-export const getAll = async (constraints?: object) => {
-    return await User.findAll({ where: { ...constraints } });
+export const getAll = async (constraints?: WhereOptions) => {
+    return await User.findAll({ where: constraints ? constraints : {} });
 };
 
 export const remove = async (id: number) => {

@@ -2,7 +2,7 @@ import readXlsxFile from 'read-excel-file/node';
 import { WhereOptions } from 'sequelize';
 import * as productDAL from '../../db/dal/product.dal';
 import { ProductAttrs } from '../../db/models/porduct.model';
-import { chunks, fromFile } from '../../utils';
+import { chunks, fromFile } from '../../utils/stream.util';
 import { ProductMapObject } from '../config';
 import { MapOptions, Product } from '../types';
 import * as mapper from './mapper';

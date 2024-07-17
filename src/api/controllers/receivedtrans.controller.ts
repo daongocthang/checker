@@ -5,7 +5,7 @@ import * as productDAL from '../../db/dal/product.dal';
 import * as receivedTransDAL from '../../db/dal/receivedtrans.dal';
 import { ProductResult } from '../../db/models';
 import { ReceivedTransAttrs } from '../../db/models/receivedtrans.model';
-import { chunks, fromFile } from '../../utils';
+import { chunks, fromFile } from '../../utils/stream.util';
 import { PATTERNS, ReceivedTransMapObject } from '../config';
 import { MapOptions, ReceivedTrans } from '../types';
 import * as mapper from './mapper';

@@ -1,11 +1,18 @@
 import bodyParser from 'body-parser';
-import cookieSession from 'cookie-session';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import { STATIC_DIR, VIEWS_DIR } from '../src/client/config';
-import clientRouter from '../src/client/routes';
+import { errorHandler } from './api/middlewares/error.middleware';
+import { User } from './api/types';
 
-// dbInit();
+declare global {
+    namespace Express {
+        interface Request {
+            user?: User;
+        }
+    }
+}
 
 const app: Express = express();
 
@@ -17,17 +24,12 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(
-    cookieSession({
-        keys: ['abcd123'],
-        httpOnly: true,
-    }),
-);
-
-// app.use('/api/v1', router);
-app.use('/', clientRouter);
+app.use(cookieParser());
 
 const PORT = parseInt(process.env.NODE_PORT as string) || 5000;
 app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
+
+// Exception Middleware
+app.use(errorHandler);

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { HttpStatus } from '../../constants';
 import * as productController from '../controllers/product.controller';
-import { xlUpload } from '../midlewares/upload';
+import { xlUpload } from '../middlewares/upload.middleware';
 import { handleSingleUpload } from './handlers';
 
 const router = Router();
