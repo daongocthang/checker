@@ -14,11 +14,15 @@ export const update = async (id: number, payload: UserAttrs) => {
     return await (user as unknown as User).update(payload);
 };
 
-export const getById = async (id: number) => {
+export const findById = async (id: number) => {
     return await User.findByPk(id);
 };
 
-export const getAll = async (constraints?: WhereOptions) => {
+export const findOne = async (constraint?: WhereOptions) => {
+    return await User.findOne({ where: constraint ? constraint : {} });
+};
+
+export const findAll = async (constraints?: WhereOptions) => {
     return await User.findAll({ where: constraints ? constraints : {} });
 };
 

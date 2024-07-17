@@ -9,12 +9,12 @@
     <body>
         <!-- main -->
         <div class="form_login">
-            <form>
+            <form action="/auth/signin">
                 <div class="form_login-title">
                     <i class="fa fa-circle-user" aria-hidden="true"></i>
                 </div>
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Username" />
+                    <input class="form-control" type="text" placeholder="Username" name="username" />
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit">
                             <i class="fa fa-arrow-right"></i>
@@ -24,5 +24,19 @@
             </form>
         </div>
         <%- include('../partials/script') %>
+        <script>
+            $('form').on('submit', (ev) => {
+                ev.preventDefault();
+                const data = $('form').serialize();
+                $.ajax({
+                    url: '/auth/signin',
+                    method: 'post',
+                    data,
+                    success: (res) => {
+                        location.href = '/';
+                    },
+                });
+            });
+        </script>
     </body>
 </html>

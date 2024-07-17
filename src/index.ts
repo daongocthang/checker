@@ -3,8 +3,12 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import { STATIC_DIR, VIEWS_DIR } from '../src/client/config';
-import { errorHandler } from './api/middlewares/error.middleware';
 import { User } from './api/types';
+import authRouter from './client/routes/auth.routes';
+import boardRouter from './client/routes/board.routes';
+import dbInit from './db';
+import authenticate from './middlewares/auth.middleware';
+import { errorHandler } from './middlewares/error.middleware';
 
 declare global {
     namespace Express {
@@ -31,5 +35,11 @@ app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
 
+// Routers
+app.use('/auth', authRouter);
+app.use('/', authenticate, boardRouter);
+
 // Exception Middleware
 app.use(errorHandler);
+
+dbInit();
