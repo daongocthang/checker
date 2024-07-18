@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import fs from 'fs';
 import multer, { FileFilterCallback } from 'multer';
-import { UPLOADS_DIR } from '../config';
+import { UPLOADS_DIR } from '../api/config';
 
 const xlFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
     if (file.mimetype.includes('excel') || file.mimetype.includes('spreadsheetml')) {

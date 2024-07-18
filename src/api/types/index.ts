@@ -1,6 +1,9 @@
 import { Row } from 'read-excel-file';
 import { MapObject, ParseWithMapOptions } from 'read-excel-file/types';
 import { range } from '../../utils/array.util';
+import Category from './category.types';
+import CRUD from './crud.types';
+import User from './user.types';
 
 export declare namespace API {
     type FileCallback = (file: Express.Multer.File) => Promise<void>;
@@ -22,4 +25,5 @@ export class MapOptions implements ParseWithMapOptions {
     };
 }
 
-export { Category, Product, ReceivedTrans, User } from './interfaces';
+export { Product, ReceivedTrans } from './interfaces';
+export { Category, CRUD, User };

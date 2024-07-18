@@ -29,7 +29,7 @@
                 ev.preventDefault();
                 const data = $('form').serialize();
                 $.ajax({
-                    url: '/auth/signin',
+                    url: '/signin',
                     method: 'post',
                     data,
                     success: (res) => {

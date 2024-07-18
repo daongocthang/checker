@@ -4,8 +4,8 @@ import * as productDAL from '../../db/dal/product.dal';
 import { ProductAttrs } from '../../db/models/porduct.model';
 import { chunks, fromFile } from '../../utils/stream.util';
 import { ProductMapObject } from '../config';
+import * as mapper from '../services/mapper';
 import { MapOptions, Product } from '../types';
-import * as mapper from './mapper';
 
 export const bulkCreate = async (filename: string) => {
     const { rows } = await readXlsxFile<ProductAttrs>(fromFile(filename), new MapOptions(ProductMapObject));

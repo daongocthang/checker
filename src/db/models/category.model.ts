@@ -2,24 +2,31 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
 
 export type CategoryAttrs = {
+    id: number;
     model: string;
     withSerial: boolean;
 };
 
-export type CategoryCreation = Optional<CategoryAttrs, 'model'>;
+export type CategoryCreation = Optional<CategoryAttrs, 'id'>;
 export type CategoryResult = Required<CategoryAttrs>;
 
 class Category extends Model<CategoryAttrs, CategoryCreation> implements CategoryAttrs {
+    declare id: number;
     declare model: string;
     declare withSerial: boolean;
 }
 
 Category.init(
     {
+        id: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         model: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false,
+            unique: true,
         },
         withSerial: DataTypes.BOOLEAN,
     },

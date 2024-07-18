@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import * as userController from '../api/controllers/user.controller';
+import { userService } from '../api/services';
 import { AuthenticationError } from './error.middleware';
 
 const authenticate = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,14 +17,14 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
             throw new AuthenticationError('UserId not found');
         }
 
-        const user = await userController.findById(decode.id);
+        const user = await userService.findById(decode.id);
         if (!user) {
             throw new AuthenticationError('User not found');
         }
         req.user = user;
         next();
     } catch (e) {
-        res.redirect('/auth/signin');
+        res.redirect('/signin');
     }
 };
 

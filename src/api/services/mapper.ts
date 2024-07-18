@@ -1,11 +1,11 @@
 import { CategoryResult, ProductResult, ReceivedTransResult, UserResult } from '../../db/models';
 import { Category, Product, ReceivedTrans, User } from '../types';
 
-export const toCategory = (category: CategoryResult): Category => {
-    return { model: category.model, withSerial: category.withSerial };
+const toCategory = (category: CategoryResult): Category => {
+    return { id: category.id, model: category.model, withSerial: category.withSerial };
 };
 
-export const toProduct = (product: ProductResult): Product => {
+const toProduct = (product: ProductResult): Product => {
     return {
         id: product.id,
         model: product.model,
@@ -13,14 +13,14 @@ export const toProduct = (product: ProductResult): Product => {
     };
 };
 
-export const toUser = (user: UserResult): User => {
+const toUser = (user: UserResult): User => {
     return {
         id: user.id,
         name: user.name,
     };
 };
 
-export const toReceivedTrans = (trans: ReceivedTransResult): ReceivedTrans => {
+const toReceivedTrans = (trans: ReceivedTransResult): ReceivedTrans => {
     return {
         ticket: trans.ticket,
         model: trans.model,
@@ -33,3 +33,7 @@ export const toReceivedTrans = (trans: ReceivedTransResult): ReceivedTrans => {
         updatedAt: trans.updatedAt,
     };
 };
+
+const mapper = { toUser, toCategory, toProduct, toReceivedTrans };
+
+export default mapper;

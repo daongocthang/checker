@@ -7,8 +7,8 @@ import { ProductResult } from '../../db/models';
 import { ReceivedTransAttrs } from '../../db/models/receivedtrans.model';
 import { chunks, fromFile } from '../../utils/stream.util';
 import { PATTERNS, ReceivedTransMapObject } from '../config';
+import * as mapper from '../services/mapper';
 import { MapOptions, ReceivedTrans } from '../types';
-import * as mapper from './mapper';
 
 export const bulkCreate = async (filename: string) => {
     const { rows } = await readXlsxFile<ReceivedTransAttrs>(

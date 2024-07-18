@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as userController from '../../api/controllers/user.controller';
+import { userService } from '../../api/services';
 import { AuthenticationError } from '../../middlewares/error.middleware';
 import * as authUtil from '../../utils/auth.util';
 
@@ -10,7 +10,7 @@ export const getSignIn = async (req: Request, res: Response) => {
 export const postSignIn = async (req: Request, res: Response) => {
     const { username } = req.body;
 
-    const user = await userController.findOne({ name: username });
+    const user = await userService.findOne({ name: username });
     if (!user) {
         throw new AuthenticationError('User not found');
     }
@@ -24,5 +24,5 @@ export const postSignIn = async (req: Request, res: Response) => {
 
 export const postSignOut = (req: Request, res: Response) => {
     authUtil.clearToken(res);
-    res.redirect('/auth/signin');
+    res.redirect('/signin');
 };

@@ -3,11 +3,6 @@ export interface Category {
     withSerial: boolean;
 }
 
-export interface User {
-    id: number;
-    name: string;
-}
-
 export interface ReceivedTrans {
     ticket: string;
     model: string;

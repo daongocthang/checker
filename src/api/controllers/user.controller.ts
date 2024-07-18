@@ -1,31 +1,39 @@
-import { WhereOptions } from 'sequelize';
-import * as userDAL from '../../db/dal/user.dal';
-import { UserAttrs } from '../../db/models/user.model';
-import { User } from '../types';
-import * as mapper from './mapper';
+import { Request, Response } from 'express';
+import { BadRequestError } from '../../middlewares/error.middleware';
+import { userService } from '../services';
 
-export const create = async (payload: UserAttrs): Promise<User> => {
-    return mapper.toUser(await userDAL.create(payload));
-};
-export const update = async (id: number, payload: UserAttrs): Promise<User> => {
-    return mapper.toUser(await userDAL.update(id, payload));
-};
-export const findById = async (id: number): Promise<User | null> => {
-    const result = await userDAL.findById(id);
-    return result ? mapper.toUser(result) : null;
-};
+class UserController {
+    create = async (req: Request, res: Response) => {
+        const payload = req.body;
 
-export const findOne = async (constraints?: WhereOptions): Promise<User | null> => {
-    const result = await userDAL.findOne(constraints);
-    if (!result) {
-        return null;
-    }
-    return mapper.toUser(result);
-};
-export const findAll = async (constraints?: WhereOptions): Promise<User[]> => {
-    const results = await userDAL.findAll(constraints);
-    return results.map((r) => mapper.toUser(r));
-};
-export const remove = async (id: number): Promise<boolean> => {
-    return await userDAL.remove(id);
-};
+        if (!payload) {
+            throw new BadRequestError('Not found user');
+        }
+
+        const result = await userService.create(payload);
+        res.status(200).send(result);
+    };
+    remove = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        if (!id) {
+            throw new BadRequestError('Not found userId');
+        }
+
+        const result = await userService.remove(parseInt(id));
+        res.status(200).send(result);
+    };
+    getById = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        if (!id) {
+            throw new BadRequestError('Not found userId');
+        }
+
+        res.status(200).send(await userService.findById(parseInt(id)));
+    };
+
+    getAll = async (req: Request, res: Response) => {
+        res.status(200).send(await userService.findAll());
+    };
+}
+
+export default new UserController();
