@@ -10,13 +10,13 @@ export type ProductAttrs = {
 export type ProductCreation = Optional<ProductAttrs, 'id'>;
 export type ProductResult = Required<ProductAttrs>;
 
-class Product extends Model<ProductAttrs, ProductCreation> implements ProductAttrs {
+class ProductModel extends Model<ProductAttrs, ProductCreation> implements ProductAttrs {
     declare id: number;
     declare model: string;
     declare serial: string;
 }
 
-Product.init(
+ProductModel.init(
     {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
@@ -39,4 +39,4 @@ Product.init(
     },
 );
 
-export default Product;
+export default ProductModel;

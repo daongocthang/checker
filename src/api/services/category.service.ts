@@ -12,8 +12,11 @@ class CategoryService implements CRUD<CategoryAttrs, Category> {
         const { rows } = await readXlsxFile<CategoryAttrs>(fromFile(filename), new MapOptions(CategoryMapObject));
         await categoryDAL.bulkCreate(rows);
     }
+    async count(constraints?: WhereOptions): Promise<number> {
+        return await categoryDAL.count(constraints);
+    }
     async create(payload: CategoryAttrs): Promise<Category> {
-        return await categoryDAL.create(payload);
+        return mapper.toCategory(await categoryDAL.create(payload));
     }
     async update(id: number, payload: CategoryAttrs): Promise<Category> {
         return mapper.toCategory(await categoryDAL.update(id, payload));

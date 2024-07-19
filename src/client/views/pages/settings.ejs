@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <%- include('../partials/head') %>>
+        <!-- css -->
+        <%- include('../partials/style') %>
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <!-- navbar -->
+        <%- include('../partials/navbar') %>
+        <!-- main -->
+        <main class="container-fluid">
+            <div class="row my-5">
+                <div class="col-sm"><%- include('../partials/impcard', {amount: counter.categories, title:'Mã thiết bị BH hãng' , url:"/api/v1/categories/upload"})%></div>
+                <div class="col-sm"><%- include('../partials/impcard',{amount: counter.products ,title:"Serial BH hãng",url:"/api/v1/products/upload"})%></div>
+            </div>
+        </main>
+
+        <!-- modal -->
+        <%- include('../partials/modal') %>
+        <!-- loader -->
+        <%- include('../partials/loader') %>
+        <!-- toast -->
+        <div id="toast"></div>
+        <%- include('../partials/footer') %>
+        <!-- sctips -->
+        <%- include('../partials/script') %>
+    </body>
+</html>

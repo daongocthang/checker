@@ -10,13 +10,13 @@ export type CategoryAttrs = {
 export type CategoryCreation = Optional<CategoryAttrs, 'id'>;
 export type CategoryResult = Required<CategoryAttrs>;
 
-class Category extends Model<CategoryAttrs, CategoryCreation> implements CategoryAttrs {
+class CategoryModel extends Model<CategoryAttrs, CategoryCreation> implements CategoryAttrs {
     declare id: number;
     declare model: string;
     declare withSerial: boolean;
 }
 
-Category.init(
+CategoryModel.init(
     {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
@@ -26,7 +26,6 @@ Category.init(
         model: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
         },
         withSerial: DataTypes.BOOLEAN,
     },
@@ -37,4 +36,4 @@ Category.init(
     },
 );
 
-export default Category;
+export default CategoryModel;

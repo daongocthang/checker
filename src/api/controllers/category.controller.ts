@@ -14,9 +14,8 @@ class CategoryController {
     };
     create = async (req: Request, res: Response) => {
         const payload = req.body;
-        console.log(payload);
 
-        if (!payload || Object.keys(payload).length === 0) {
+        if (!payload) {
             throw new BadRequestError('Not found any category');
         }
 

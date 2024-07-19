@@ -1,6 +1,6 @@
 import { DataTypes, ForeignKey, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
-import User from './user.model';
+import UserModel from './user.model';
 
 export type ReceivedTransAttrs = {
     ticket: string;
@@ -8,7 +8,7 @@ export type ReceivedTransAttrs = {
     serial: string;
     description: string;
     expired: boolean;
-    userId: ForeignKey<User['id']>;
+    userId: ForeignKey<UserModel['id']>;
     status?: string;
 
     createdAt?: Date;
@@ -24,7 +24,7 @@ class ReceivedTrans extends Model<ReceivedTransAttrs, ReceivedTransCreation> imp
     declare serial: string;
     declare description: string;
     declare expired: boolean;
-    declare userId: ForeignKey<User['id']>;
+    declare userId: ForeignKey<UserModel['id']>;
     declare status: string;
 
     // timestamp
@@ -54,7 +54,7 @@ ReceivedTrans.init(
     },
 );
 
-ReceivedTrans.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(ReceivedTrans, { foreignKey: 'userId' });
+ReceivedTrans.belongsTo(UserModel, { foreignKey: 'userId' });
+UserModel.hasMany(ReceivedTrans, { foreignKey: 'userId' });
 
 export default ReceivedTrans;

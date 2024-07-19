@@ -9,12 +9,12 @@ export type UserAttrs = {
 export type UserCreation = Optional<UserAttrs, 'id'>;
 export type UserResult = Required<UserAttrs>;
 
-class User extends Model<UserAttrs, UserCreation> implements UserAttrs {
+class UserModel extends Model<UserAttrs, UserCreation> implements UserAttrs {
     declare id: number;
     declare name: string;
 }
 
-User.init(
+UserModel.init(
     {
         id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
         name: {
@@ -29,4 +29,4 @@ User.init(
     },
 );
 
-export default User;
+export default UserModel;

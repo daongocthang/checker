@@ -1,20 +1,25 @@
-const onUploadHandler = () => {
-    const form = $('#modal form');
-    if (!form) return;
-
-    const input = form.find('input')[0];
-    formData = new FormData();
-    formData.append('file', input.files[0]);
-
-    modal.submit({
-        url: form.attr('action'),
+const uploadXlsxFile = (url, files) => {
+    const formData = new FormData();
+    formData.append('file', files[0]);
+    console.log(url);
+    $.ajax({
+        url,
         type: 'post',
         data: formData,
         contentType: false,
         processData: false,
         beforeSend: () => {
-            modal.dismiss();
-            if (input.files[0]) $('#loader').modal('show');
+            $('#loader').modal('show');
+        },
+        success: (res) => {
+            toast({ type: 'success', ...res });
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            const err = JSON.parse(jqXHR.responseText);
+            toast({ type: 'error', ...err });
+        },
+        complete: () => {
+            $('#loader').modal('hide');
         },
     });
 };
