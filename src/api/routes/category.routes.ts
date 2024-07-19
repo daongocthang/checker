@@ -6,7 +6,7 @@ const categoryRouter = Router();
 
 categoryRouter.post('/upload', xlUpload.single('file'), categoryController.upload);
 categoryRouter.post('/', categoryController.create);
-categoryRouter.put('/:model', categoryController.update);
+categoryRouter.put('/:id', categoryController.update);
 categoryRouter.delete('/:id', categoryController.remove);
 categoryRouter.delete('/', categoryController.removeAll);
 categoryRouter.get('/', categoryController.findAll);

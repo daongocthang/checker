@@ -22,6 +22,7 @@
                     </div>
                 </div>
             </form>
+            <div class="text-danger mt-1 ml-2" id="error"></div>
         </div>
         <%- include('../partials/script') %>
         <script>
@@ -34,6 +35,10 @@
                     data,
                     success: (res) => {
                         location.href = '/';
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        const err = JSON.parse(jqXHR.responseText);
+                        $('#error').text(err.message);
                     },
                 });
             });

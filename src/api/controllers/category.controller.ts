@@ -7,7 +7,7 @@ import { handleSingleUpload } from './handlers';
 class CategoryController {
     upload = (req: Request, res: Response) => {
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
-            await categoryService.bulkCreate(file.fieldname);
+            await categoryService.bulkCreate(file.filename);
         };
 
         handleSingleUpload(req, res, cb);
@@ -19,14 +19,13 @@ class CategoryController {
         if (!payload || Object.keys(payload).length === 0) {
             throw new BadRequestError('Not found any category');
         }
-        try {
-            res.status(200).send(await categoryService.create(payload));
-        } catch (error) {
-            throw new Error('Validation Error');
-        }
+
+        res.status(200).send(await categoryService.create(payload));
     };
     update = async (req: Request, res: Response) => {
         const { id } = req.params;
+        console.log(parseInt(id));
+
         const payload = req.body;
         if (!id || !payload) {
             throw new BadRequestError('Not found any id or new category');

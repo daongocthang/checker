@@ -5,7 +5,7 @@ const developing = process.env.NODE_ENV === 'development';
 
 const dbInit = () => {
     User.sync({ alter: developing });
-    Category.sync({ alter: developing });
+    Category.sync({ alter: developing, force: true });
     // ReceivedTrans.sync({ alter: developing });
     // Product.sync({ alter: developing });
 };

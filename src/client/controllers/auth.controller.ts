@@ -3,16 +3,19 @@ import { userService } from '../../api/services';
 import { AuthenticationError } from '../../middlewares/error.middleware';
 import * as authUtil from '../../utils/auth.util';
 
-export const getSignIn = async (req: Request, res: Response) => {
+export const signIn = async (req: Request, res: Response) => {
     res.render('pages/signin');
 };
 
-export const postSignIn = async (req: Request, res: Response) => {
+export const sign = async (req: Request, res: Response) => {
     const { username } = req.body;
+    if (!username) {
+        throw new AuthenticationError('Must not be empty');
+    }
 
     const user = await userService.findOne({ name: username });
     if (!user) {
-        throw new AuthenticationError('User not found');
+        throw new AuthenticationError('Not available');
     }
 
     authUtil.generateToken(res, { id: user.id });
@@ -22,7 +25,7 @@ export const postSignIn = async (req: Request, res: Response) => {
     });
 };
 
-export const postSignOut = (req: Request, res: Response) => {
+export const signOut = (req: Request, res: Response) => {
     authUtil.clearToken(res);
     res.redirect('/signin');
 };
