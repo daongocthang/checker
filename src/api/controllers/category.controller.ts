@@ -8,6 +8,8 @@ class CategoryController {
     upload = (req: Request, res: Response) => {
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
             await categoryService.bulkCreate(file.filename);
+            const count = await categoryService.count();
+            res.status(200).send({ message: 'Upload the file complete', count: count.toLocaleString() });
         };
 
         handleSingleUpload(req, res, cb);
@@ -48,12 +50,12 @@ class CategoryController {
         if (!id) {
             throw new BadRequestError('Not found any id');
         }
-        const resultOK = await categoryService.remove(parseInt(id));
+        const resultOK = await categoryService.remove({ id });
 
         res.status(200).send({ message: resultOK ? 'Successfully removed' : 'Failed to remove' });
     };
     removeAll = async (req: Request, res: Response) => {
-        const resultOK = await categoryService.removeAll();
+        const resultOK = await categoryService.remove();
         res.status(200).send({ message: resultOK ? 'Successfully removed' : 'Failed to remove' });
     };
 }

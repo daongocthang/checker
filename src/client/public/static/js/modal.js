@@ -52,3 +52,32 @@ const modal = {
         });
     },
 };
+
+const dialog = {
+    show: function (title, content, type, handler) {
+        const tvTile = $('#dialog .modal-title');
+        const tvContent = $('#dialog .modal-body');
+        const btSubmit = $('#dialog .modal-footer').children().last();
+
+        tvTile.removeClass();
+        tvTile.addClass('text-' + type);
+
+        btSubmit.removeClass();
+        btSubmit.addClass('btn btn-' + type);
+
+        tvTile.text(title);
+        tvContent.text(content);
+
+        btSubmit.off('click');
+        btSubmit.on('click', () => {
+            if (handler instanceof Function) {
+                handler();
+            }
+        });
+
+        $('#dialog').modal({ show: true });
+    },
+    dismiss: function () {
+        $('#dialog').modal('hide');
+    },
+};

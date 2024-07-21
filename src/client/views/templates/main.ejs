@@ -1,74 +1,51 @@
-<div class="mx-4">
-    <div>Welcome to EJS</div>
+<div class="my-4">
     <!-- File Browser -->
-    <div class="custom-file">
-        <input id="xlupload" class="custom-file-input" type="file" name="" />
-        <label for="xlupload" class="custom-file-label">Choose Excel file</label>
+    <div class="d-flex justify-content-end">
+        <label class="btn btn-success mx-2">
+            <i class="fa fa-exchange"></i> Chuyển dữ liệu
+            <input type="button" style="display: none" id="migration" />
+        </label>
+        <label class="btn btn-primary">
+            <i class="fa fa-file-import"></i> Nhập dữ liệu
+            <input type="file" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="uploadXlsxFile('/api/v1/trans/uploads',this)" />
+        </label>
+    </div>
+    <div class="d-flex justify-content-end">
+        <p><i class="fa fa-warning text-warning"></i> Lưu ý nhập sẽ khá lâu</p>
     </div>
     <!-- Search Box -->
-    <form>
-        <div class="input-group">
-            <input class="form-control" type="search" placeholder="Search..." />
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
+    <div class="my-5">
+        <form class="d-flex justify-content-center" id="frmSearch">
+            <div class="input-group w-25">
+                <input class="form-control" type="search" placeholder="Search..." name="serial" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="d-flex justify-content-center">
+            <div class="w-25 text-right py-2">
+                <i class="fa fa-cube text-danger"></i> <span id="checked"><%= checked.toLocaleString() %></span> / <span id="total"><%= total.toLocaleString() %></span>
             </div>
         </div>
-    </form>
+    </div>
+
     <!-- Data Table -->
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped mt-4">
         <thead>
             <tr>
-                <td>Phiếu tiếp nhận</td>
-                <td>Mã thiết bị</td>
-                <td>SN</td>
-                <td>Mô tả lỗi</td>
-                <td>Bảo hành hãng</td>
+                <td><strong>Phiếu tiếp nhận</strong></td>
+                <td><strong>Mã thiết bị</strong></td>
+                <td><strong>SN</strong></td>
+                <td class="text-center"><strong>Gợi ý</strong></td>
+                <td class="text-center"><strong>Bảo hành hãng</strong></td>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="align-middle">TNNB.T066_1600530004.24/06.0005</td>
-                <td class="align-middle">TV360_ATV_SDMC_DV9135</td>
-                <td class="align-middle">SDMC10112200053588</td>
-                <td class="align-middle">hư tb</td>
-                <td class="align-middle">
-                    <div
-                        class="badge badge-success text-uppercase"
-                        style="padding-inline: 1.5em; padding-top: 0.8em; padding-bottom: 0.8em"
-                    >
-                        còn bh
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle">TNNB.T066_1600530004.24/06.0007</td>
-                <td class="align-middle">STB2C-NA1420v1</td>
-                <td class="align-middle">BI10574819501268</td>
-                <td class="align-middle">hỏng</td>
-                <td class="align-middle">
-                    <div
-                        class="badge badge-danger text-uppercase"
-                        style="padding-inline: 1.5em; padding-top: 0.8em; padding-bottom: 0.8em"
-                    >
-                        hết bh
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle">TNNB.T066_1600530004.24/06.0022</td>
-                <td class="align-middle">HWF_120WD</td>
-                <td class="align-middle">VTGRB1AD3AC4</td>
-                <td class="align-middle">lỗi tb</td>
-                <td class="align-middle">
-                    <div
-                        class="badge badge-success text-uppercase"
-                        style="padding-inline: 1.5em; padding-top: 0.8em; padding-bottom: 0.8em"
-                    >
-                        còn bh
-                    </div>
-                </td>
+                <td colspan="5" class="text-center text-danger">Không tìm thấy dữ liệu</td>
             </tr>
         </tbody>
     </table>

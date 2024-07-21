@@ -5,6 +5,7 @@ export type CategoryAttrs = {
     id: number;
     model: string;
     withSerial: boolean;
+    size: number;
 };
 
 export type CategoryCreation = Optional<CategoryAttrs, 'id'>;
@@ -14,6 +15,7 @@ class CategoryModel extends Model<CategoryAttrs, CategoryCreation> implements Ca
     declare id: number;
     declare model: string;
     declare withSerial: boolean;
+    declare size: number;
 }
 
 CategoryModel.init(
@@ -28,6 +30,7 @@ CategoryModel.init(
             allowNull: false,
         },
         withSerial: DataTypes.BOOLEAN,
+        size: { type: DataTypes.INTEGER, defaultValue: 0 },
     },
     {
         sequelize: sequelizeConnection,

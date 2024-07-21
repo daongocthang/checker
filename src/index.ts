@@ -9,6 +9,7 @@ import { User } from './api/types';
 import authRouter from './client/routes/auth.routes';
 import boardRouter from './client/routes/board.routes';
 import dbInit from './db';
+import dbInit2 from './db2';
 import authenticate from './middlewares/auth.middleware';
 import { errorHandler } from './middlewares/error.middleware';
 
@@ -37,14 +38,14 @@ app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
 
-// API Routes
-app.use('/api/v1', apiRouter);
-
 //Client Routes
 app.use('/', authRouter);
+// API Routes
+app.use('/api/v1', authenticate, apiRouter);
 app.use('/', authenticate, boardRouter);
 
 // Exception Middleware
 app.use(errorHandler);
 
 dbInit();
+dbInit2();

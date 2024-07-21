@@ -2,8 +2,8 @@ import { DataTypes, ForeignKey, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
 import UserModel from './user.model';
 
-export type ReceivedTransAttrs = {
-    ticket: string;
+export type TransAttrs = {
+    id: string;
     model: string;
     serial: string;
     description: string;
@@ -15,11 +15,11 @@ export type ReceivedTransAttrs = {
     updatedAt?: Date;
 };
 
-export type ReceivedTransCreation = Optional<ReceivedTransAttrs, 'ticket'>;
-export type ReceivedTransResult = Required<ReceivedTransAttrs>;
+export type TransCreation = Optional<TransAttrs, 'id'>;
+export type TransResult = Required<TransAttrs>;
 
-class ReceivedTrans extends Model<ReceivedTransAttrs, ReceivedTransCreation> implements ReceivedTransAttrs {
-    declare ticket: string;
+class TransModel extends Model<TransAttrs, TransCreation> implements TransAttrs {
+    declare id: string;
     declare model: string;
     declare serial: string;
     declare description: string;
@@ -32,12 +32,11 @@ class ReceivedTrans extends Model<ReceivedTransAttrs, ReceivedTransCreation> imp
     declare readonly updatedAt: Date;
 }
 
-ReceivedTrans.init(
+TransModel.init(
     {
-        ticket: {
+        id: {
             type: DataTypes.STRING,
             primaryKey: true,
-            unique: true,
             allowNull: false,
         },
         model: {
@@ -46,7 +45,7 @@ ReceivedTrans.init(
         },
         serial: DataTypes.STRING,
         description: DataTypes.TEXT,
-        expired: DataTypes.BOOLEAN,
+        expired: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
     {
         sequelize: sequelizeConnection,
@@ -54,7 +53,7 @@ ReceivedTrans.init(
     },
 );
 
-ReceivedTrans.belongsTo(UserModel, { foreignKey: 'userId' });
-UserModel.hasMany(ReceivedTrans, { foreignKey: 'userId' });
+TransModel.belongsTo(UserModel, { foreignKey: 'userId' });
+UserModel.hasMany(TransModel, { foreignKey: 'userId' });
 
-export default ReceivedTrans;
+export default TransModel;

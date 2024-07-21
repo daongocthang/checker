@@ -19,7 +19,7 @@ class UserController {
             throw new BadRequestError('Not found userId');
         }
 
-        const result = await userService.remove(parseInt(id));
+        const result = await userService.remove({ id });
         res.status(200).send(result);
     };
     getById = async (req: Request, res: Response) => {

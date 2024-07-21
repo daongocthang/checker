@@ -26,16 +26,13 @@ class CategoryDAL implements CRUD<CategoryAttrs, CategoryModel> {
     async findAll(constraints?: WhereOptions): Promise<CategoryModel[]> {
         return await CategoryModel.findAll({ where: constraints ? constraints : {} });
     }
-    async remove(id: number): Promise<boolean> {
-        const delCount = CategoryModel.destroy({ where: { id } });
-        return !!delCount;
-    }
-    async removeAll(constraints?: WhereOptions): Promise<boolean> {
+
+    async remove(constraints?: WhereOptions): Promise<boolean> {
         const delCount = CategoryModel.destroy({ where: constraints ? constraints : {} });
         return !!delCount;
     }
     async count(constraints?: WhereOptions): Promise<number> {
-        return CategoryModel.count({ where: constraints ? constraints : {} });
+        return CategoryModel.count({ where: constraints ? constraints : {}, col: 'id', distinct: true });
     }
 }
 

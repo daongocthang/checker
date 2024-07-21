@@ -1,11 +1,11 @@
-import { CategoryResult, ProductResult, ReceivedTransResult, UserResult } from '../../db/models';
-import { Category, Product, ReceivedTrans, User } from '../types';
+import { CategoryResult, ProductResult, TransResult, UserResult } from '../../db/models';
+import { User, Warranty as wnty } from '../types';
 
-const toCategory = (category: CategoryResult): Category => {
-    return { id: category.id, model: category.model, withSerial: category.withSerial };
+const toCategory = (category: CategoryResult): wnty.Category => {
+    return { id: category.id, model: category.model, withSerial: category.withSerial, size: category.size };
 };
 
-const toProduct = (product: ProductResult): Product => {
+const toProduct = (product: ProductResult): wnty.Product => {
     return {
         id: product.id,
         model: product.model,
@@ -20,9 +20,9 @@ const toUser = (user: UserResult): User => {
     };
 };
 
-const toReceivedTrans = (trans: ReceivedTransResult): ReceivedTrans => {
+const toTransaction = (trans: TransResult): wnty.Transaction => {
     return {
-        ticket: trans.ticket,
+        id: trans.id,
         model: trans.model,
         serial: trans.serial,
         description: trans.description,
@@ -34,6 +34,6 @@ const toReceivedTrans = (trans: ReceivedTransResult): ReceivedTrans => {
     };
 };
 
-const mapper = { toUser, toCategory, toProduct, toReceivedTrans };
+const mapper = { toUser, toCategory, toProduct, toTransaction };
 
 export default mapper;

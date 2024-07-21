@@ -23,11 +23,7 @@ class UserDAL implements CRUD<UserAttrs, UserModel> {
     async findAll(constraints?: WhereOptions): Promise<UserModel[]> {
         return await UserModel.findAll({ where: constraints ? constraints : {} });
     }
-    async remove(id: number): Promise<boolean> {
-        const delCount = await UserModel.destroy({ where: { id } });
-        return !!delCount;
-    }
-    async removeAll(constraints?: WhereOptions): Promise<boolean> {
+    async remove(constraints?: WhereOptions): Promise<boolean> {
         const delCount = await UserModel.destroy({ where: constraints ? constraints : {} });
         return !!delCount;
     }

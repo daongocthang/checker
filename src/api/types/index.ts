@@ -1,8 +1,7 @@
 import { Row } from 'read-excel-file';
 import { MapObject, ParseWithMapOptions } from 'read-excel-file/types';
 import { range } from '../../utils/array.util';
-import Category from './category.types';
-import CRUD from './crud.types';
+import CRUD from './crud.type';
 import User from './user.types';
 
 export declare namespace API {
@@ -25,5 +24,25 @@ export class MapOptions implements ParseWithMapOptions {
     };
 }
 
-export { Product, ReceivedTrans } from './interfaces';
-export { Category, CRUD, User };
+export namespace Warranty {
+    export type Category = { id: number; model: string; withSerial: boolean; size: number };
+    export type Product = {
+        id: number;
+        model: string;
+        serial: string;
+    };
+    export type Transaction = {
+        id: string;
+        model: string;
+        serial: string;
+        description: string;
+        expired: boolean;
+        userId: number;
+        suggestion?: string;
+
+        createdAt: Date;
+        updatedAt: Date;
+    };
+}
+
+export { CRUD, User };

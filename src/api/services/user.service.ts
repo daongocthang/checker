@@ -26,11 +26,8 @@ class UserService implements CRUD<UserAttrs, User> {
         const results = await userDAL.findAll(constraints);
         return results.map((r) => mapper.toUser(r));
     }
-    async remove(id: number): Promise<boolean> {
-        return await userDAL.remove(id);
-    }
-    async removeAll(constraints?: WhereOptions): Promise<boolean> {
-        return await userDAL.removeAll(constraints);
+    async remove(constraints?: WhereOptions): Promise<boolean> {
+        return await userDAL.remove(constraints);
     }
 }
 

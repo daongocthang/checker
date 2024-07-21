@@ -4,7 +4,7 @@ import categoryController from '../controllers/category.controller';
 
 const categoryRouter = Router();
 
-categoryRouter.post('/upload', xlUpload.single('file'), categoryController.upload);
+categoryRouter.post('/uploads', xlUpload.single('file'), categoryController.upload);
 categoryRouter.post('/', categoryController.create);
 categoryRouter.put('/:id', categoryController.update);
 categoryRouter.delete('/:id', categoryController.remove);

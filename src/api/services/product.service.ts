@@ -5,10 +5,10 @@ import { ProductAttrs } from '../../db/models/porduct.model';
 import { chunks } from '../../utils/array.util';
 import { fromFile } from '../../utils/stream.util';
 import { ProductMapObject } from '../config';
-import { CRUD, MapOptions, Product } from '../types';
+import { CRUD, MapOptions, Warranty as wnty } from '../types';
 import mapper from './mapper';
 
-class ProductService implements CRUD<ProductAttrs, Product> {
+class ProductService implements CRUD<ProductAttrs, wnty.Product> {
     async bulkCreate(filename: string): Promise<void> {
         const { rows } = await readXlsxFile<ProductAttrs>(fromFile(filename), new MapOptions(ProductMapObject));
         await Promise.all(chunks(rows, 500).map((chunk) => productDal.bulkCreate(chunk)));
@@ -16,33 +16,31 @@ class ProductService implements CRUD<ProductAttrs, Product> {
     async count(constraints?: WhereOptions): Promise<number> {
         return await productDal.count(constraints);
     }
-    async create(payload: ProductAttrs): Promise<Product> {
+    async create(payload: ProductAttrs): Promise<wnty.Product> {
         return mapper.toProduct(await productDal.create(payload));
     }
-    async update(id: number, payload: ProductAttrs): Promise<Product> {
+    async update(id: number, payload: ProductAttrs): Promise<wnty.Product> {
         return mapper.toProduct(await productDal.update(id, payload));
     }
-    async findById(id: number): Promise<Product | null> {
+    async findById(id: number): Promise<wnty.Product | null> {
         const result = await productDal.findById(id);
         if (!result) return null;
 
         return mapper.toProduct(result);
     }
-    async findOne(constraints?: WhereOptions): Promise<Product | null> {
+    async findOne(constraints?: WhereOptions): Promise<wnty.Product | null> {
         const result = await productDal.findOne(constraints);
         if (!result) return null;
 
         return mapper.toProduct(result);
     }
-    async findAll(constraints?: WhereOptions): Promise<Product[]> {
+    async findAll(constraints?: WhereOptions): Promise<wnty.Product[]> {
         const results = await productDal.findAll(constraints);
         return results.map((r) => mapper.toProduct(r));
     }
-    async remove(id: number): Promise<boolean> {
-        return await productDal.remove(id);
-    }
-    async removeAll(constraints?: WhereOptions): Promise<boolean> {
-        return await productDal.removeAll(constraints);
+
+    async remove(constraints?: WhereOptions): Promise<boolean> {
+        return await productDal.remove(constraints);
     }
 }
 
