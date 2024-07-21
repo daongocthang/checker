@@ -3,8 +3,8 @@ import { CRUD } from '../../api/types';
 import TransModel, { TransAttrs } from '../models/trans.model';
 
 class TransDAL implements CRUD<TransAttrs, TransModel> {
-    async bulkCreate(payload: TransAttrs[]): Promise<TransModel[]> {
-        return await TransModel.bulkCreate(payload, { ignoreDuplicates: true });
+    async bulkCreate(payload: TransAttrs[]): Promise<void> {
+        await TransModel.bulkCreate(payload, { ignoreDuplicates: true });
     }
     async count(constraints?: WhereOptions): Promise<number> {
         return await TransModel.count({ where: constraints ? constraints : {}, col: 'id', distinct: true });

@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
-import transService, { updateExpiredAll } from '../services/trans.service';
+import { chunks } from '../../utils/array.util';
+import transService, { readAndFitler, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
@@ -13,14 +14,22 @@ class TransController {
         }
 
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
-            const rows = await transService.bulkCreate(file.filename);
+            const rows = await readAndFitler(file.filename);
             if (rows.length == 0) {
                 throw new Error();
             }
-            console.log('INSERTED_COUNT: ' + rows.length.toLocaleString());
 
-            const count = await updateExpiredAll(rows);
-            res.status(200).send({ message: 'Upload the file complete', count: count.toLocaleString() });
+            const updatedRows = await updateExpiredAll(rows);
+
+            await Promise.all(chunks(updatedRows, 500).map((c) => transService.bulkCreate(c)));
+
+            const strptime = new Date(new Date().setUTCHours(0, 0, 0, 0));
+            res.status(200).send({
+                message: 'Upload the file complete',
+                count: await transService.count({
+                    updatedAt: { $gte: strptime },
+                }),
+            });
         };
 
         await handleSingleUpload(req, res, cb);
