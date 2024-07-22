@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import categoryService from '../../api/services/category.service';
+import suggestionService from '../../api/services/suggestion.service';
 import transService from '../../api/services/trans.service';
 import { AuthenticationError } from '../../middlewares/error.middleware';
 
@@ -27,6 +28,7 @@ export const home = async (req: Request, res: Response) => {
 
 export const settings = async (req: Request, res: Response) => {
     const categoryCount = await categoryService.count();
-    const counter = { categories: categoryCount.toLocaleString(), products: 'Infinity' };
+    const suggestionCount = await suggestionService.count();
+    const counter = { categories: categoryCount, products: 'Infinity', suggestions: suggestionCount };
     res.render('pages/settings', { user: req.user, counter });
 };

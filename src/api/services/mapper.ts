@@ -1,4 +1,5 @@
 import { CategoryResult, ProductResult, TransResult, UserResult } from '../../db/models';
+import { SuggestionResult } from '../../db/models/suggestion.model';
 import { User, Warranty as wnty } from '../types';
 
 const toCategory = (category: CategoryResult): wnty.Category => {
@@ -34,6 +35,14 @@ const toTransaction = (trans: TransResult): wnty.Transaction => {
     };
 };
 
-const mapper = { toUser, toCategory, toProduct, toTransaction };
+const toSuggestion = (suggestion: SuggestionResult): wnty.Suggestion => {
+    return {
+        id: suggestion.id,
+        action: suggestion.action,
+        createdAt: suggestion.createdAt,
+    };
+};
+
+const mapper = { toUser, toCategory, toProduct, toTransaction, toSuggestion };
 
 export default mapper;

@@ -43,6 +43,12 @@ export namespace Warranty {
         createdAt: Date;
         updatedAt: Date;
     };
+    export type Suggestion = {
+        id: string;
+        action: string;
+
+        createdAt: Date;
+    };
 }
 
 export { CRUD, User };

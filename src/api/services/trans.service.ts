@@ -4,7 +4,6 @@ import transDal from '../../db/dal/trans.dal';
 import { TransAttrs, TransResult } from '../../db/models/trans.model';
 import { chunks } from '../../utils/array.util';
 import { fromFile } from '../../utils/stream.util';
-import { currentTimeMillis } from '../../utils/time.uitl';
 import { PATTERNS, TransMapObject } from '../config';
 import { CRUD, MapOptions, Warranty as wnty } from '../types';
 import categoryService from './category.service';
@@ -79,10 +78,8 @@ export const isExpired = async (serial: string, model: string, categories: wnty.
 };
 
 export const updateExpiredAll = async (payload: wnty.Transaction[]): Promise<wnty.Transaction[]> => {
-    const startIimeMillis = currentTimeMillis();
     const categories = await categoryService.findAll();
     const checkedTransArray = await Promise.all(payload.map((row) => checkExpired(row, categories)));
-    console.log('SPENT_TIME_MILLS: ' + (currentTimeMillis() - startIimeMillis).toLocaleString());
     return checkedTransArray;
 };
 

@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import productService from '../services/product.service';
+import suggestionService from '../services/suggestion.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
-class ProductController {
+class SuggestionController {
     upload = async (req: Request, res: Response) => {
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
-            await productService.bulkCreate(file.filename);
-            const count = 'infinity';
+            await suggestionService.bulkCreate(file.filename);
+            const count = suggestionService.count();
             res.status(200).send({ message: 'Upload the file complete', count });
         };
 
@@ -15,4 +15,4 @@ class ProductController {
     };
 }
 
-export default new ProductController();
+export default new SuggestionController();

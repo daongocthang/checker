@@ -23,3 +23,8 @@ export const CategoryMapObject: MapObject = {
     'BH theo serial': 'withSerial',
     'Độ dài serial': 'size',
 };
+
+export const SuggestionMapObject: MapObject = {
+    'Mã thiết bị': 'id',
+    'Đề xuất': 'action',
+};

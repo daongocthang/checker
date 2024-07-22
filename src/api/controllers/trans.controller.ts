@@ -1,16 +1,19 @@
 import { Request, Response } from 'express';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
+import { currentTimeMillis } from '../../utils/time.uitl';
 import transService, { readAndFitler, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
 class TransController {
-    bulkCreate = async (req: Request, res: Response) => {
+    upload = async (req: Request, res: Response) => {
         const userId = req.user?.id;
         if (!userId) {
             throw new AuthenticationError('User is not available');
         }
+
+        const startIimeMillis = currentTimeMillis();
 
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
             const rows = await readAndFitler(file.filename);
@@ -31,6 +34,7 @@ class TransController {
         };
 
         await handleSingleUpload(req, res, cb);
+        console.log('SPENT_TIME_MILLS: ' + (currentTimeMillis() - startIimeMillis).toLocaleString());
     };
 
     findAndUpdate = async (req: Request, res: Response) => {

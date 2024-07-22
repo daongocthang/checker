@@ -5,14 +5,14 @@ import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
 class CategoryController {
-    upload = (req: Request, res: Response) => {
+    upload = async (req: Request, res: Response) => {
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
             await categoryService.bulkCreate(file.filename);
             const count = await categoryService.count();
             res.status(200).send({ message: 'Upload the file complete', count: count.toLocaleString() });
         };
 
-        handleSingleUpload(req, res, cb);
+        await handleSingleUpload(req, res, cb);
     };
     create = async (req: Request, res: Response) => {
         const payload = req.body;
