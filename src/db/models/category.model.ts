@@ -2,8 +2,7 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
 
 export type CategoryAttrs = {
-    id: number;
-    model: string;
+    id: string;
     withSerial: boolean;
     size: number;
 };
@@ -12,8 +11,7 @@ export type CategoryCreation = Optional<CategoryAttrs, 'id'>;
 export type CategoryResult = Required<CategoryAttrs>;
 
 class CategoryModel extends Model<CategoryAttrs, CategoryCreation> implements CategoryAttrs {
-    declare id: number;
-    declare model: string;
+    declare id: string;
     declare withSerial: boolean;
     declare size: number;
 }
@@ -21,12 +19,8 @@ class CategoryModel extends Model<CategoryAttrs, CategoryCreation> implements Ca
 CategoryModel.init(
     {
         id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        model: {
             type: DataTypes.STRING,
+            primaryKey: true,
             allowNull: false,
         },
         withSerial: DataTypes.BOOLEAN,

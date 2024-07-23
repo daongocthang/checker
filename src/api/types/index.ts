@@ -27,7 +27,7 @@ export class MapOptions implements ParseWithMapOptions {
 }
 
 export namespace Warranty {
-    export type Category = { id: number; model: string; withSerial: boolean; size: number };
+    export type Category = { id: string; withSerial: boolean; size: number };
     export type Product = {
         id: number;
         model: string;

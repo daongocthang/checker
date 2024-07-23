@@ -32,7 +32,7 @@ class CategoryController {
             throw new BadRequestError('Not found any id or new category');
         }
 
-        res.status(200).send(await categoryService.update(parseInt(id), payload));
+        res.status(200).send(await categoryService.update(id, payload));
     };
     findById = async (req: Request, res: Response) => {
         const { id } = req.params;
@@ -40,7 +40,7 @@ class CategoryController {
             throw new BadRequestError('Not found any id');
         }
 
-        res.status(200).send(await categoryService.findById(parseInt(id)));
+        res.status(200).send(await categoryService.findById(id));
     };
     findAll = async (req: Request, res: Response) => {
         res.status(200).send(await categoryService.findAll());

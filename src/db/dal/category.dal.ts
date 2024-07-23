@@ -4,12 +4,12 @@ import CategoryModel, { CategoryAttrs } from '../models/category.model';
 
 class CategoryDAL implements CRUD<CategoryAttrs, CategoryModel> {
     async bulkCreate(payload: CategoryAttrs[]): Promise<void> {
-        await CategoryModel.bulkCreate(payload, { ignoreDuplicates: true });
+        await CategoryModel.bulkCreate(payload, { updateOnDuplicate: ['withSerial'] });
     }
     async create(payload: CategoryAttrs): Promise<CategoryModel> {
         return await CategoryModel.create(payload);
     }
-    async update(id: number, payload: CategoryAttrs): Promise<CategoryModel> {
+    async update(id: string, payload: CategoryAttrs): Promise<CategoryModel> {
         const result = await CategoryModel.findByPk(id);
         if (result === null) {
             throw new Error('Not found');
@@ -17,7 +17,7 @@ class CategoryDAL implements CRUD<CategoryAttrs, CategoryModel> {
 
         return await (result as CategoryModel).update(payload);
     }
-    async findById(id: number): Promise<CategoryModel | null> {
+    async findById(id: string): Promise<CategoryModel | null> {
         return await CategoryModel.findByPk(id);
     }
     async findOne(constraints?: WhereOptions): Promise<CategoryModel | null> {

@@ -11,5 +11,4 @@ categoryRouter.delete('/:id', categoryController.remove);
 categoryRouter.delete('/', categoryController.removeAll);
 categoryRouter.get('/', categoryController.findAll);
 categoryRouter.get('/:id', categoryController.findById);
-
 export default categoryRouter;

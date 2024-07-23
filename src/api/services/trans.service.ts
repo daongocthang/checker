@@ -47,7 +47,7 @@ class TransService implements CRUD<TransAttrs, wnty.Transaction> {
 const transService = new TransService();
 
 const findCategory = (model: string, categories: wnty.Category[]): wnty.Category | undefined => {
-    return categories.find((cat) => model.includes(cat.model));
+    return categories.find((cat) => model.includes(cat.id));
 };
 
 const checkExpired = async (trans: wnty.Transaction, categories: wnty.Category[]): Promise<wnty.Transaction> => {
@@ -70,7 +70,7 @@ export const isExpired = async (serial: string, model: string, categories: wnty.
     if (!cat.withSerial || cat.size === 0) return false; // still under warranty
 
     const count = await productService.count({
-        model: cat.model,
+        model: cat.id,
         serial: serial.substring(0, cat.size),
     });
 

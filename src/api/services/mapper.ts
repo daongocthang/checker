@@ -3,7 +3,7 @@ import { SuggestionResult } from '../../db/models/suggestion.model';
 import { User, Warranty as wnty } from '../types';
 
 const toCategory = (category: CategoryResult): wnty.Category => {
-    return { id: category.id, model: category.model, withSerial: category.withSerial, size: category.size };
+    return { id: category.id, withSerial: category.withSerial, size: category.size };
 };
 
 const toProduct = (product: ProductResult): wnty.Product => {

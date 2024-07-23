@@ -18,10 +18,10 @@ class CategoryService implements CRUD<CategoryAttrs, wnty.Category> {
     async create(payload: CategoryAttrs): Promise<wnty.Category> {
         return mapper.toCategory(await categoryDAL.create(payload));
     }
-    async update(id: number, payload: CategoryAttrs): Promise<wnty.Category> {
+    async update(id: string, payload: CategoryAttrs): Promise<wnty.Category> {
         return mapper.toCategory(await categoryDAL.update(id, payload));
     }
-    async findById(id: number): Promise<wnty.Category | null> {
+    async findById(id: string): Promise<wnty.Category | null> {
         const result = await categoryDAL.findById(id);
         if (!result) {
             return null;
