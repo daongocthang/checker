@@ -83,4 +83,11 @@ export const updateExpiredAll = async (payload: wnty.Transaction[]): Promise<wnt
     return checkedTransArray;
 };
 
+export const suggest = (s: string): string => {
+    if (!global.adapter) return 'unknown';
+
+    const suggestion = global.adapter.find((item) => s.includes(item.id));
+    return suggestion ? suggestion.action : 'deprecated';
+};
+
 export default transService;

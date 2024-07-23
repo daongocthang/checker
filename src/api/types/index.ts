@@ -4,6 +4,8 @@ import { range } from '../../utils/array.util';
 import CRUD from './crud.type';
 import User from './user.types';
 
+export declare type Adapter<T> = T[];
+
 export declare namespace API {
     type FileCallback = (file: Express.Multer.File) => Promise<void>;
 }

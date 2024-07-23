@@ -7,7 +7,7 @@ class SuggestionController {
     upload = async (req: Request, res: Response) => {
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
             await suggestionService.bulkCreate(file.filename);
-            const count = suggestionService.count();
+            const count = await suggestionService.count();
             res.status(200).send({ message: 'Upload the file complete', count });
         };
 

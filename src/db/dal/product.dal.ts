@@ -7,7 +7,7 @@ class ProductDAL implements CRUD<ProductAttrs, ProductModel> {
         await ProductModel.bulkCreate(payload, { ignoreDuplicates: true });
     }
     async count(constraints?: WhereOptions): Promise<number> {
-        return await ProductModel.count({ where: constraints ? constraints : {}, col: 'id', distinct: true });
+        return await ProductModel.count({ where: constraints ?? {}, col: 'id', distinct: true });
     }
     async create(payload: ProductAttrs): Promise<ProductModel> {
         return await ProductModel.create(payload);
@@ -24,14 +24,14 @@ class ProductDAL implements CRUD<ProductAttrs, ProductModel> {
         return await ProductModel.findByPk(id);
     }
     async findOne(constraints?: WhereOptions): Promise<ProductModel | null> {
-        return await ProductModel.findOne({ where: constraints ? constraints : {} });
+        return await ProductModel.findOne({ where: constraints ?? {} });
     }
     async findAll(constraints?: WhereOptions): Promise<ProductModel[]> {
-        return await ProductModel.findAll({ where: constraints ? constraints : {} });
+        return await ProductModel.findAll({ where: constraints ?? {} });
     }
 
     async remove(constraints?: WhereOptions): Promise<boolean> {
-        const delCount = await ProductModel.destroy({ where: constraints ? constraints : {} });
+        const delCount = await ProductModel.destroy({ where: constraints ?? {} });
         return !!delCount;
     }
 }

@@ -7,7 +7,7 @@ class SuggestionDAL implements CRUD<SuggestionAttrs, SuggestionModel> {
         await SuggestionModel.bulkCreate(payload, { ignoreDuplicates: true });
     }
     async count(constraints?: WhereOptions): Promise<number> {
-        return SuggestionModel.count({ where: constraints ? constraints : {} });
+        return SuggestionModel.count({ where: constraints ?? {} });
     }
     async create(payload: SuggestionAttrs): Promise<SuggestionModel> {
         return SuggestionModel.create(payload);
@@ -22,13 +22,13 @@ class SuggestionDAL implements CRUD<SuggestionAttrs, SuggestionModel> {
         return await SuggestionModel.findByPk(id);
     }
     async findOne(constraints?: WhereOptions): Promise<SuggestionModel | null> {
-        return await SuggestionModel.findOne({ where: constraints ? constraints : {} });
+        return await SuggestionModel.findOne({ where: constraints ?? {} });
     }
     async findAll(constraints?: WhereOptions): Promise<SuggestionModel[]> {
-        return await SuggestionModel.findAll({ where: constraints ? constraints : {} });
+        return await SuggestionModel.findAll({ where: constraints ?? {} });
     }
     async remove(constraints?: WhereOptions): Promise<boolean> {
-        const delCount = await SuggestionModel.destroy({ where: constraints ? constraints : {} });
+        const delCount = await SuggestionModel.destroy({ where: constraints ?? {} });
 
         return !!delCount;
     }

@@ -5,7 +5,7 @@ import express, { Express } from 'express';
 import 'express-async-errors';
 import { STATIC_DIR, VIEWS_DIR } from '../src/client/config';
 import apiRouter from './api/routes';
-import { User } from './api/types';
+import { Adapter, User, Warranty as wnty } from './api/types';
 import authRouter from './client/routes/auth.routes';
 import boardRouter from './client/routes/board.routes';
 import dbInit from './db';
@@ -18,6 +18,8 @@ declare global {
             user?: User;
         }
     }
+
+    var adapter: Adapter<wnty.Suggestion>;
 }
 
 const app: Express = express();

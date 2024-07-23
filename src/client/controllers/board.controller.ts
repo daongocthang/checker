@@ -11,6 +11,8 @@ export const home = async (req: Request, res: Response) => {
         throw new AuthenticationError('User is not available');
     }
 
+    if (!global.adapter) global.adapter = await suggestionService.findAll();
+
     const checked = await transService.count({
         updatedAt: {
             $gte: strptime,

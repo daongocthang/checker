@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
 import { currentTimeMillis } from '../../utils/time.uitl';
-import transService, { readAndFitler, updateExpiredAll } from '../services/trans.service';
+import transService, { readAndFitler, suggest, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
@@ -57,7 +57,7 @@ class TransController {
         if (!data) throw new Error('Not found');
 
         data.userId = userId;
-        data.suggestion = data.expired ? 'ĐỔI' : 'TEST';
+        data.suggestion = data.expired ? suggest(data.model) : 'test';
         await transService.update(data.id, data);
 
         const checked = await transService.count({

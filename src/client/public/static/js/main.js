@@ -17,7 +17,7 @@ $('#frmSearch').on('submit', (ev) => {
             <td class="align-middle">${data.id}</td>
             <td class="align-middle">${data.model}</td>
             <td class="align-middle">${data.serial}</td>            
-            <td class="align-middle text-primary font-weight-bold text-center">${data.suggestion}</td>
+            <td class="align-middle text-primary font-weight-bold text-center text-uppercase">${data.suggestion}</td>
             <td class="align-middle  text-center">
                 <div class="badge badge-${attr} text-uppercase badge--align">${val}</div>
             </td>
