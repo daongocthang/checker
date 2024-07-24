@@ -1,17 +1,21 @@
 <div class="card">
     <div class="card-body">
         <h1 class="card-title text-primary"><%= amount %></h1>
-        <div class="card-text">
-            <i class="fa fa-database" aria-hidden="true"></i> <%= title %>
-            <label class="btn btn-primary mr-0 float-right">
+        <div class="card-text d-flex justify-content-between">
+            <div><i class="fa fa-database" aria-hidden="true"></i> <%= title %></div>
+
+            <label class="btn btn-primary mr-0">
                 <i class="fa fa-file-import"></i> Import
-                <input type="file" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="uploadXlsxFile('<%= url %>',this)" />
+                <input type="file" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="uploadXlsxFile('/api/v1/<%= name %>/uploads',this)" />
             </label>
         </div>
-        <div class="card-text mt-5">
+        <div class="card-text mt-5 d-flex justify-content-between align-items-end">
             <small>
-                <a href="/downloads?p=<%= link %>">Tải file mẫu tại đây</a>
+                <a href="/downloads?p=<%= name %>.xlsx">Tải file mẫu tại đây</a>
             </small>
+            <div>
+                <button class="btn btn-outline-primary" role="button" onclick="fetch('/api/v1/<%= name %>')"><i class="fa fa-table"></i></button>
+            </div>
         </div>
     </div>
 </div>

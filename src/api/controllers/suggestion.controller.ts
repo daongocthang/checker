@@ -13,6 +13,9 @@ class SuggestionController {
 
         await handleSingleUpload(req, res, cb);
     };
+    findAll = async (req: Request, res: Response) => {
+        res.status(200).send(await suggestionService.findAll());
+    };
 }
 
 export default new SuggestionController();

@@ -13,6 +13,10 @@ class ProductController {
 
         await handleSingleUpload(req, res, cb);
     };
+
+    group = async (req: Request, res: Response) => {
+        res.status(200).send(await productService.group());
+    };
 }
 
 export default new ProductController();

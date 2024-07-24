@@ -11,15 +11,13 @@
         <%- include('../partials/navbar') %>
         <!-- main -->
         <main class="container-fluid">
-            <div class="row my-5">
-                <div class="col-sm">
-                    <%- include('../partials/impcard', { amount: counter.categories.toLocaleString(), title:'Mã thiết bị BH hãng' , url:"/api/v1/categories/uploads", link:"category.xlsx" })%>
-                </div>
-                <div class="col-sm"><%- include('../partials/impcard',{amount: counter.products.toLocaleString(),title:"Serial BH hãng",url:"/api/v1/products/uploads",link:"product.xlsx"})%></div>
-                <div class="col-sm">
-                    <%- include('../partials/impcard',{amount: counter.suggestions.toLocaleString() ,title:"Danh mục đề xuất",url:"/api/v1/suggestions/uploads",link:"suggestion.xlsx"})%>
-                </div>
+            <div class="row mt-5">
+                <div class="col-sm"><%- include('../partials/impcard', { amount: counter.categories.toLocaleString(), title:'Mã thiết bị BH hãng' ,name:"categories" })%></div>
+                <div class="col-sm"><%- include('../partials/impcard',{amount: counter.products.toLocaleString(),title:"Serial BH hãng",name:"products"})%></div>
+                <div class="col-sm"><%- include('../partials/impcard',{amount: counter.suggestions.toLocaleString() ,title:"Danh mục đề xuất",name:"suggestions"})%></div>
             </div>
+
+            <table class="table table-bordered table-striped mt-4"></table>
         </main>
 
         <!-- modal -->
@@ -31,5 +29,6 @@
         <%- include('../partials/footer') %>
         <!-- sctips -->
         <%- include('../partials/script') %>
+        <script src="/js/settings.js"></script>
     </body>
 </html>

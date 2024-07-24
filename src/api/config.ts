@@ -19,7 +19,7 @@ export const ProductMapObject: MapObject = {
 };
 
 export const CategoryMapObject: MapObject = {
-    'Mã thiết bị': 'model',
+    'Mã thiết bị': 'id',
     'BH theo serial': 'withSerial',
     'Độ dài serial': 'size',
 };

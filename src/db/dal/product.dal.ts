@@ -1,4 +1,4 @@
-import { WhereOptions } from 'sequelize';
+import { col, fn, WhereOptions } from 'sequelize';
 import { CRUD } from '../../api/types';
 import ProductModel, { ProductAttrs } from '../models/porduct.model';
 
@@ -33,6 +33,13 @@ class ProductDAL implements CRUD<ProductAttrs, ProductModel> {
     async remove(constraints?: WhereOptions): Promise<boolean> {
         const delCount = await ProductModel.destroy({ where: constraints ?? {} });
         return !!delCount;
+    }
+
+    async group(): Promise<ProductModel[]> {
+        return await ProductModel.findAll({
+            group: 'model',
+            attributes: ['model', [fn('count', col('serial')), 'count']],
+        });
     }
 }
 

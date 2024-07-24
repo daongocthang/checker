@@ -42,6 +42,10 @@ class ProductService implements CRUD<ProductAttrs, wnty.Product> {
     async remove(constraints?: WhereOptions): Promise<boolean> {
         return await productDal.remove(constraints);
     }
+
+    async group(): Promise<wnty.Product[]> {
+        return await productDal.group();
+    }
 }
 
 export default new ProductService();
