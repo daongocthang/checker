@@ -9,7 +9,7 @@
         "clean": "rm -rf dist && mkdir dist",
         "build": "npx tsc",
         "start": "node --max-old-space-size=4096 dist/index.js",
-        "dev": "nodemon src/index.ts --node-flags --max-old-space-size=4096"
+        "dev": "nodemon src/index.ts"
     },
     "keywords": [],
     "author": "",
