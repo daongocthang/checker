@@ -1,5 +1,6 @@
 function fetch(s) {
     $('table').empty();
+    $('#error').text('');
     $.ajax({
         url: s,
         type: 'get',
@@ -7,6 +8,10 @@ function fetch(s) {
             $('#loader').modal('show');
         },
         success: (res) => {
+            if (res.length == 0) {
+                $('#error').text('No Data Found');
+                return;
+            }
             const heads = Object.keys(res[0]).map((elem) => `<th>${elem}</th>`);
             $('table').append(`<thead><tr>${heads.join()}</tr></thead>`);
             const rows = [];

@@ -1,3 +1,4 @@
+import Excel from 'exceljs';
 import readXlsxFile from 'read-excel-file/node';
 import { WhereOptions } from 'sequelize';
 import transDal from '../../db/dal/trans.dal';
@@ -88,6 +89,24 @@ export const suggest = (s: string): string => {
 
     const suggestion = global.adapter.find((item) => s.includes(item.id));
     return suggestion ? suggestion.action : 'deprecated';
+};
+
+export const exportXlsxFile = async (data: wnty.Transaction[], path: string) => {
+    const wb = new Excel.Workbook();
+    const ws = wb.addWorksheet('De xuat');
+    ws.columns = [
+        { key: 'id', header: 'Phiếu tiếp nhận' },
+        { key: 'serial', header: 'IMEI' },
+        { key: 'model', header: 'Mã thiết bị' },
+        { key: 'expired', header: 'Hết BH hãng' },
+        { key: 'suggestion', header: 'Đề xuất' },
+    ];
+
+    data.forEach((row) => {
+        ws.addRow(row);
+    });
+
+    await wb.xlsx.writeFile(path);
 };
 
 export default transService;
