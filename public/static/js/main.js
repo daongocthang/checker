@@ -59,13 +59,3 @@ $('#migration').click(() => {
         });
     });
 });
-
-$('#export').on('click', (ev) => {
-    $.ajax({
-        url: '/api/v1/trans/downloads',
-        type: 'get',
-        error: () => {
-            toast({ message: 'No Data Found', type: 'error' });
-        },
-    });
-});

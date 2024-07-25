@@ -123,7 +123,7 @@ class TransController {
         if (!fs.existsSync(UPLOADS_DIR)) {
             fs.mkdirSync(UPLOADS_DIR);
         }
-        const filePath = path.join(UPLOADS_DIR, `${Date.now()}-DeXuat`);
+        const filePath = path.join(UPLOADS_DIR, `${Date.now()}-DeXuat.xlsx`);
         await exportXlsxFile(rows, filePath);
 
         res.download(filePath, (er) => {
