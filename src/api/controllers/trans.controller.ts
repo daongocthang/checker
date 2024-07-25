@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
 import { currentTimeMillis } from '../../utils/time.uitl';
-import transService, { readAndFitler, suggest, updateExpiredAll } from '../services/trans.service';
+import { UPLOADS_DIR } from '../config';
+import transService, { exportXlsxFile, readAndFitler, suggest, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
@@ -104,6 +107,28 @@ class TransController {
         }
 
         res.status(200).send({ message: 'Data migration successed' });
+    };
+
+    download = async (req: Request, res: Response) => {
+        const rows = await transService.findAll({
+            updatedAt: {
+                $gte: new Date(new Date().setUTCHours(0, 0, 0, 0)),
+            },
+        });
+
+        if (rows.length == 0) {
+            throw new Error('No Data Found');
+        }
+
+        if (!fs.existsSync(UPLOADS_DIR)) {
+            fs.mkdirSync(UPLOADS_DIR);
+        }
+        const filePath = path.join(UPLOADS_DIR, `${Date.now()}-DeXuat`);
+        await exportXlsxFile(rows, filePath);
+
+        res.download(filePath, (er) => {
+            if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+        });
     };
 }
 

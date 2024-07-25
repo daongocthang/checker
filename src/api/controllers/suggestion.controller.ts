@@ -16,6 +16,15 @@ class SuggestionController {
     findAll = async (req: Request, res: Response) => {
         res.status(200).send(await suggestionService.findAll());
     };
+
+    removeAll = async (req: Request, res: Response) => {
+        const resultOK = await suggestionService.remove();
+        if (!resultOK) {
+            throw new Error('Failed to delete');
+        }
+
+        res.status(200).send({ message: 'All suggestions deleted successfully.' });
+    };
 }
 
 export default new SuggestionController();

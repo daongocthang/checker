@@ -1,6 +1,6 @@
-import Excel from 'exceljs';
 import readXlsxFile from 'read-excel-file/node';
 import { WhereOptions } from 'sequelize';
+import writeXlsxFile from 'write-excel-file/node';
 import transDal from '../../db/dal/trans.dal';
 import { TransAttrs, TransResult } from '../../db/models/trans.model';
 import { chunks } from '../../utils/array.util';
@@ -71,7 +71,7 @@ export const isExpired = async (serial: string, model: string, categories: wnty.
     if (!cat.withSerial || cat.size === 0) return false; // still under warranty
 
     const count = await productService.count({
-        model: cat.id,
+        model: { $like: cat.id },
         serial: serial.substring(0, cat.size),
     });
 
@@ -91,22 +91,35 @@ export const suggest = (s: string): string => {
     return suggestion ? suggestion.action : 'deprecated';
 };
 
-export const exportXlsxFile = async (data: wnty.Transaction[], path: string) => {
-    const wb = new Excel.Workbook();
-    const ws = wb.addWorksheet('De xuat');
-    ws.columns = [
-        { key: 'id', header: 'Phiếu tiếp nhận' },
-        { key: 'serial', header: 'IMEI' },
-        { key: 'model', header: 'Mã thiết bị' },
-        { key: 'expired', header: 'Hết BH hãng' },
-        { key: 'suggestion', header: 'Đề xuất' },
+export const exportXlsxFile = async (data: wnty.Transaction[], filePath: string) => {
+    const schema = [
+        {
+            column: 'Phiếu tiếp nhận',
+            type: String,
+            value: (t: wnty.Transaction) => t.id,
+        },
+        {
+            column: 'IMEI',
+            type: String,
+            value: (t: wnty.Transaction) => t.serial,
+        },
+        {
+            column: 'Mã thiết bị',
+            type: String,
+            value: (t: wnty.Transaction) => t.model,
+        },
+        {
+            column: 'Hết BH hãng',
+            type: Boolean,
+            value: (t: wnty.Transaction) => t.expired,
+        },
+        {
+            column: 'Đề xuất',
+            type: String,
+            value: (t: wnty.Transaction) => t.suggestion,
+        },
     ];
-
-    data.forEach((row) => {
-        ws.addRow(row);
-    });
-
-    await wb.xlsx.writeFile(path);
+    await writeXlsxFile(data, { schema, filePath });
 };
 
 export default transService;

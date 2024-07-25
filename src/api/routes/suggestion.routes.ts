@@ -5,5 +5,6 @@ import suggestionController from '../controllers/suggestion.controller';
 const suggestionRouter = Router();
 suggestionRouter.post('/uploads', xlUpload.single('file'), suggestionController.upload);
 suggestionRouter.get('/', suggestionController.findAll);
+suggestionRouter.delete('/', suggestionController.removeAll);
 
 export default suggestionRouter;

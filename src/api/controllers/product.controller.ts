@@ -13,6 +13,14 @@ class ProductController {
 
         await handleSingleUpload(req, res, cb);
     };
+    removeAll = async (req: Request, res: Response) => {
+        const resultOK = await productService.remove();
+        if (!resultOK) {
+            throw new Error('Failed to delete');
+        }
+
+        res.status(200).send({ message: 'All products deleted successfully.' });
+    };
 
     group = async (req: Request, res: Response) => {
         res.status(200).send(await productService.group());

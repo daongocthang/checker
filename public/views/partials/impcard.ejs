@@ -14,6 +14,7 @@
                 <a href="/downloads?p=<%= name %>.xlsx">Tải file mẫu tại đây</a>
             </small>
             <div>
+                <button class="btn btn-danger" role="button" onclick="del('/api/v1/<%= name %>',this)"><i class="fa fa-trash"></i></button>
                 <button class="btn btn-outline-primary" role="button" onclick="fetch('/api/v1/<%= name %>')"><i class="fa fa-table"></i></button>
             </div>
         </div>
