@@ -64,6 +64,7 @@ export const readAndFitler = async (filename: string): Promise<wnty.Transaction[
 
 export const isExpired = async (serial: string, model: string, categories: wnty.Category[]): Promise<boolean> => {
     const cat = findCategory(model, categories);
+
     if (cat === undefined) {
         return true;
     }
@@ -71,7 +72,7 @@ export const isExpired = async (serial: string, model: string, categories: wnty.
     if (!cat.withSerial || cat.size === 0) return false; // still under warranty
 
     const count = await productService.count({
-        model: { $like: cat.id },
+        model: { $like: `%${cat.id}%` },
         serial: serial.substring(0, cat.size),
     });
 
