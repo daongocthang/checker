@@ -119,6 +119,9 @@ class TransController {
         if (rows.length == 0) {
             throw new Error('No Data Found');
         }
+        rows.forEach((x) => {
+            x.suggestion = x.expired ? suggest(x.model) : 'test';
+        });
 
         if (!fs.existsSync(UPLOADS_DIR)) {
             fs.mkdirSync(UPLOADS_DIR);
