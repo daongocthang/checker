@@ -8,8 +8,8 @@
         "watch": "node-sass -w scss/ -o public/static/css/",
         "clean": "rm -rf dist && mkdir dist",
         "build": "npx tsc",
-        "start": "node dist/index.js",
-        "dev": "nodemon src/index.ts"
+        "start": "node --max-old-space-size=4096 dist/index.js",
+        "dev": "nodemon src/index.ts --node-flags --max-old-space-size=4096"
     },
     "keywords": [],
     "author": "",
@@ -33,6 +33,7 @@
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
         "ejs": "^3.1.10",
+        "exceljs": "^4.4.0",
         "express": "^4.19.2",
         "express-async-errors": "^3.1.1",
         "jsonwebtoken": "^9.0.2",

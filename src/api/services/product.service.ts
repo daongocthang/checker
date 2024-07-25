@@ -12,6 +12,9 @@ class ProductService implements CRUD<ProductAttrs, wnty.Product> {
     async bulkCreate(filename: string): Promise<void> {
         const { rows } = await readXlsxFile<ProductAttrs>(fromFile(filename), new MapOptions(ProductMapObject));
         await Promise.all(chunks(rows, 500).map((chunk) => productDal.bulkCreate(chunk)));
+        // await handleChunks(rows, 500, async (chunk: ProductAttrs[]) => {
+        //     await productDal.bulkCreate(chunk);
+        // });
     }
     async count(constraints?: WhereOptions): Promise<number> {
         return await productDal.count(constraints);
