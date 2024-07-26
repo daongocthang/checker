@@ -53,6 +53,7 @@ const findCategory = (model: string, categories: wnty.Category[]): wnty.Category
 
 const checkExpired = async (trans: wnty.Transaction, categories: wnty.Category[]): Promise<wnty.Transaction> => {
     trans.expired = await isExpired(trans.serial, trans.model, categories);
+
     return trans;
 };
 
@@ -76,7 +77,7 @@ export const isExpired = async (serial: string, model: string, categories: wnty.
         serial: serial.substring(0, cat.size),
     });
 
-    return count === 0;
+    return !count;
 };
 
 export const updateExpiredAll = async (payload: wnty.Transaction[]): Promise<wnty.Transaction[]> => {
