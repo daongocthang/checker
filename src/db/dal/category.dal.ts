@@ -4,7 +4,7 @@ import CategoryModel, { CategoryAttrs } from '../models/category.model';
 
 class CategoryDAL implements CRUD<CategoryAttrs, CategoryModel> {
     async bulkCreate(payload: CategoryAttrs[]): Promise<void> {
-        await CategoryModel.bulkCreate(payload, { updateOnDuplicate: ['withSerial'] });
+        await CategoryModel.bulkCreate(payload, { updateOnDuplicate: ['withSerial', 'size'] });
     }
     async create(payload: CategoryAttrs): Promise<CategoryModel> {
         return await CategoryModel.create(payload);
