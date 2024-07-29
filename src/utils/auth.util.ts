@@ -5,9 +5,11 @@ export const generateToken = (res: Response, payload: string | object) => {
     const jwtSecret = process.env.JWT_SECRET || '';
     const token = jwt.sign(payload, jwtSecret, { expiresIn: '24h' });
 
+    console.log(process.env.NODE_ENV);
+
     res.cookie('jwt', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
+        // secure: process.env.NODE_ENV !== 'development',
         maxAge: 24 * 60 * 60 * 1000,
     });
 };

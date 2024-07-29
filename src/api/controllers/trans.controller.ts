@@ -5,6 +5,7 @@ import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
 import { currentTimeMillis } from '../../utils/time.uitl';
 import { UPLOADS_DIR } from '../config';
+import suggestionService from '../services/suggestion.service';
 import transService, { exportXlsxFile, readAndFitler, suggest, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
@@ -59,8 +60,12 @@ class TransController {
         });
         if (!data) throw new Error('Not found');
 
+        if (!global.adapter) {
+            global.adapter = await suggestionService.findAll();
+        }
+
         data.userId = userId;
-        data.suggestion = data.expired ? suggest(data.model) : 'test';
+        data.suggestion = data.expired ? suggest(data.model, global.adapter) : 'test';
         await transService.update(data.id, data);
 
         const checked = await transService.count({
@@ -119,8 +124,13 @@ class TransController {
         if (rows.length == 0) {
             throw new Error('No Data Found');
         }
+
+        if (!global.adapter) {
+            global.adapter = await suggestionService.findAll();
+        }
+
         rows.forEach((x) => {
-            x.suggestion = x.expired ? suggest(x.model) : 'test';
+            x.suggestion = x.expired ? suggest(x.model, global.adapter) : 'test';
         });
 
         if (!fs.existsSync(UPLOADS_DIR)) {

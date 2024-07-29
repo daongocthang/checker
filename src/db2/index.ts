@@ -1,9 +1,7 @@
 import OrderModel from './order.model';
 
-const developing = process.env.NODE_ENV === 'development';
-
 const dbInit2 = () => {
-    OrderModel.sync({ alter: developing });
+    OrderModel.sync();
 };
 
 export default dbInit2;

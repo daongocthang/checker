@@ -6,7 +6,7 @@ import { TransAttrs, TransResult } from '../../db/models/trans.model';
 import { chunks } from '../../utils/array.util';
 import { fromFile } from '../../utils/stream.util';
 import { PATTERNS, TransMapObject } from '../config';
-import { CRUD, MapOptions, Warranty as wnty } from '../types';
+import { Adapter, CRUD, MapOptions, Warranty as wnty } from '../types';
 import categoryService from './category.service';
 import mapper from './mapper';
 import productService from './product.service';
@@ -86,10 +86,10 @@ export const updateExpiredAll = async (payload: wnty.Transaction[]): Promise<wnt
     return checkedTransArray;
 };
 
-export const suggest = (s: string): string => {
-    if (!global.adapter) return 'unknown';
+export const suggest = (s: string, adapter: Adapter<wnty.Suggestion>): string => {
+    if (!adapter) return 'unknown';
 
-    const suggestion = global.adapter.find((item) => s.includes(item.id));
+    const suggestion = adapter.find((item) => s.includes(item.id));
     return suggestion ? suggestion.action : 'deprecated';
 };
 
@@ -119,6 +119,11 @@ export const exportXlsxFile = async (data: wnty.Transaction[], filePath: string)
             column: 'Đề xuất',
             type: String,
             value: (t: wnty.Transaction) => t.suggestion,
+        },
+        {
+            column: 'User',
+            type: Number,
+            value: (t: wnty.Transaction) => t.userId,
         },
     ];
     await writeXlsxFile(data, { schema, filePath });
