@@ -59,3 +59,11 @@ $('#migration').click(() => {
         });
     });
 });
+
+$('#suggest').click(() => {
+    var root = $('#suggest').parents('.input-group');
+    var inverse = $('input[type="checkbox"]').is(':checked');
+    var count = root.find('input[type="text"]').val();
+
+    console.log(inverse, $.isNumeric(count) ? parseInt(count) : 9999);
+});

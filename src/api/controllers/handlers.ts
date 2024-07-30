@@ -17,6 +17,7 @@ export async function handleSingleUpload(req: Request, res: Response, cb: API.Fi
             message: 'Could not upload the file: ' + file.originalname,
             error: e,
         });
+        console.log(e);
     } finally {
         if (file.path) {
             fs.unlinkSync(file.path);

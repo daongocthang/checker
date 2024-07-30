@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
-import { currentTimeMillis } from '../../utils/time.uitl';
+import { currentDate, currentTimeMillis } from '../../utils/time.uitl';
 import { UPLOADS_DIR } from '../config';
 import transService, { exportXlsxFile, makeSuggestion, readAndFitler, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
@@ -24,17 +24,14 @@ class TransController {
                 throw new Error();
             }
 
-            let updatedRows = await updateExpiredAll(rows);
             // TODAO: make suggestion
-            updatedRows = await makeSuggestion(updatedRows);
+            const updated = await makeSuggestion(await updateExpiredAll(rows));
+            await transService.bulkCreate(updated);
 
-            await transService.bulkCreate(updatedRows);
-
-            const strptime = new Date(new Date().setUTCHours(0, 0, 0, 0));
             res.status(200).send({
                 message: 'Upload the file complete',
                 count: await transService.count({
-                    updatedAt: { $gte: strptime },
+                    updatedAt: { $gte: currentDate() },
                 }),
             });
         };
@@ -52,11 +49,10 @@ class TransController {
         if (!userId) {
             throw new AuthenticationError('User is not available');
         }
-        const strptime: Date = new Date(new Date().setUTCHours(0, 0, 0, 0));
 
         const data = await transService.findOne({
             updatedAt: {
-                $gte: strptime,
+                $gte: currentDate(),
             },
             serial,
         });
@@ -67,7 +63,7 @@ class TransController {
 
         const checked = await transService.count({
             updatedAt: {
-                $gte: strptime,
+                $gte: currentDate(),
             },
             userId: userId,
         });
@@ -91,10 +87,9 @@ class TransController {
             throw new AuthenticationError('User is not available');
         }
 
-        const strptime = new Date(new Date().setUTCHours(0, 0, 0, 0));
         const data = await transService.findAll({
             updatedAt: {
-                $gte: strptime,
+                $gte: currentDate(),
             },
             userId,
         });
@@ -117,6 +112,7 @@ class TransController {
                 $gte: new Date(new Date().setUTCHours(0, 0, 0, 0)),
             },
         });
+        console.log(rows);
 
         if (rows.length == 0) {
             throw new Error('No Data Found');
@@ -131,6 +127,20 @@ class TransController {
         res.download(filePath, (er) => {
             if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
         });
+    };
+
+    suggests = async (req: Request, res: Response) => {
+        const { inverse, count } = req.body;
+        const rows = await transService.findAll({
+            updatedAt: {
+                $gte: currentDate(),
+            },
+        });
+
+        const payload = await makeSuggestion(rows, count ?? 9999, inverse ?? true);
+        await Promise.all(payload.map((x) => transService.update(x.id, x)));
+
+        res.status(200).send({ message: 'Updated all suggestions successfully.' });
     };
 }
 

@@ -73,9 +73,10 @@ export const isExpired = async (serial: string, model: string, categories: wnty.
 
     if (!cat.withSerial || cat.size === 0) return false; // still under warranty
 
+    const truncated = `${serial}`.substring(0, cat.size);
     const count = await productService.count({
         model: { $like: `%${cat.id}%` },
-        serial: serial.substring(0, cat.size),
+        serial: truncated,
     });
 
     return !count;

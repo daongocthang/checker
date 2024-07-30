@@ -30,7 +30,6 @@ ProductModel.init(
         serial: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
         },
     },
     {
