@@ -3,13 +3,14 @@ import { WhereOptions } from 'sequelize';
 import writeXlsxFile from 'write-excel-file/node';
 import transDal from '../../db/dal/trans.dal';
 import { TransAttrs, TransResult } from '../../db/models/trans.model';
-import { chunks } from '../../utils/array.util';
+import { chunks, random } from '../../utils/array.util';
 import { fromFile } from '../../utils/stream.util';
 import { PATTERNS, TransMapObject } from '../config';
 import { Adapter, CRUD, MapOptions, Warranty as wnty } from '../types';
 import categoryService from './category.service';
 import mapper from './mapper';
 import productService from './product.service';
+import suggestionService from './suggestion.service';
 
 class TransService implements CRUD<TransAttrs, wnty.Transaction> {
     async bulkCreate(payload: TransAttrs[]): Promise<void> {
@@ -91,6 +92,24 @@ export const suggest = (s: string, adapter: Adapter<wnty.Suggestion>): string =>
 
     const suggestion = adapter.find((item) => s.includes(item.id));
     return suggestion ? suggestion.action : 'deprecated';
+};
+
+export const makeSuggestion = async (rows: wnty.Transaction[], size: number = 9999, inverse: boolean = true) => {
+    const adapter: Adapter<wnty.Suggestion> = await suggestionService.findAll();
+    rows.forEach((x) => (x.suggestion = x.expired ? suggest(x.model, adapter) : 'test'));
+
+    const filteredRows = rows.filter((x) => x.suggestion == 'dồn dịch');
+    const fixedSize = Math.min(size, filteredRows.length);
+    let count = inverse ? filteredRows.length - fixedSize : fixedSize;
+    while (count-- >= 0) {
+        let i = random(filteredRows.length);
+        let trans = filteredRows.splice(i, 1)[0];
+
+        let rowId = rows.findIndex((x) => x.id == trans.id);
+        if (rowId >= 0) rows[rowId].suggestion = 'test';
+    }
+
+    return rows;
 };
 
 export const exportXlsxFile = async (data: wnty.Transaction[], filePath: string) => {

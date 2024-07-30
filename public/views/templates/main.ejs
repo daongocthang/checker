@@ -1,8 +1,21 @@
 <div class="my-4">
     <!-- File Browser -->
     <div class="d-flex">
-        <div class="mr-auto">
+        <div class="mx-2">
             <a href="/api/v1/trans/downloads" role="button" class="btn btn-outline-secondary"><i class="fa fa-download"></i> Tải đề xuất</a>
+        </div>
+        <div class="mr-auto">
+            <div class="input-group w-75">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="inverse" />
+                    </div>
+                </div>
+                <input type="text" class="form-control" placeholder="test" aria-label="test" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"><i class="fa fa-dice"></i></button>
+                </div>
+            </div>
         </div>
         <label class="btn btn-success mx-2">
             <i class="fa fa-exchange"></i> Chuyển dữ liệu
@@ -16,6 +29,7 @@
     <div class="d-flex justify-content-end">
         <p><i class="fa fa-warning text-warning"></i> Lưu ý nhập sẽ khá lâu</p>
     </div>
+
     <!-- Search Box -->
     <div class="my-5">
         <form class="d-flex justify-content-center" id="frmSearch">

@@ -7,8 +7,6 @@ export function chunks<T>(rows: T[], size: number): T[][] {
     }
     return holder;
 }
-export async function handleChunks<T>(rows: T[], size: number, cb: CallableFunction) {
-    while (rows.length) {
-        await cb(rows.splice(0, size));
-    }
+export function random(max: number): number {
+    return Math.floor(Math.random() * max);
 }

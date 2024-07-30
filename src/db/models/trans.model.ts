@@ -8,6 +8,7 @@ export type TransAttrs = {
     serial: string;
     description: string;
     expired: boolean;
+    suggestion: string;
     userId: ForeignKey<UserModel['id']>;
     status?: string;
 
@@ -24,6 +25,7 @@ class TransModel extends Model<TransAttrs, TransCreation> implements TransAttrs 
     declare serial: string;
     declare description: string;
     declare expired: boolean;
+    declare suggestion: string;
     declare userId: ForeignKey<UserModel['id']>;
     declare status: string;
 
@@ -46,6 +48,7 @@ TransModel.init(
         serial: DataTypes.STRING,
         description: DataTypes.TEXT,
         expired: { type: DataTypes.BOOLEAN, defaultValue: true },
+        suggestion: DataTypes.STRING,
     },
     {
         sequelize: sequelizeConnection,

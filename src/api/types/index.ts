@@ -40,7 +40,7 @@ export namespace Warranty {
         description: string;
         expired: boolean;
         userId: number;
-        suggestion?: string;
+        suggestion: string;
 
         createdAt: Date;
         updatedAt: Date;
