@@ -15,6 +15,7 @@ export const toOrderAttrs = (trans: wnty.Transaction) => {
         model: trans.model,
         serial: trans.serial,
         description: trans.description,
+        method: ['đổi', 'dồn dịch'].includes(trans.suggestion) ? 'đổi máy' : undefined,
     };
 
     return orderAttrs;
