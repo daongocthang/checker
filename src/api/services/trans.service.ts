@@ -95,14 +95,13 @@ export const suggest = (s: string, adapter: Adapter<wnty.Suggestion>): string =>
     return suggestion ? suggestion.action : 'lỗi thời';
 };
 
-export const updateAllSuggestions = async (rows: wnty.Transaction[], size: number = 9999, inverse: boolean = true) => {
+export const updateAllSuggestions = async (rows: wnty.Transaction[], size: number = Infinity, inverse: boolean = true) => {
     const adapter: Adapter<wnty.Suggestion> = await suggestionService.findAll();
     rows.forEach((x) => (x.suggestion = x.expired ? suggest(x.model, adapter) : 'test'));
 
     const filteredRows = rows.filter((x) => x.suggestion == 'dồn dịch');
     const fixedSize = Math.min(size, filteredRows.length);
     let count = inverse ? filteredRows.length - fixedSize : fixedSize;
-    console.log(inverse, size, fixedSize, count);
 
     while (count-- > 0) {
         let i = random(filteredRows.length);

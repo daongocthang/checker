@@ -4,7 +4,7 @@ import SuggestionModel, { SuggestionAttrs } from '../models/suggestion.model';
 
 class SuggestionDAL implements CRUD<SuggestionAttrs, SuggestionModel> {
     async bulkCreate(payload: SuggestionAttrs[]): Promise<void> {
-        await SuggestionModel.bulkCreate(payload, { ignoreDuplicates: true });
+        await SuggestionModel.bulkCreate(payload, { updateOnDuplicate: ['action'] });
     }
     async count(constraints?: WhereOptions): Promise<number> {
         return SuggestionModel.count({ where: constraints ?? {} });

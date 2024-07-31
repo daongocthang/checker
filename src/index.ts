@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -9,6 +12,7 @@ import { STATIC_DIR, VIEWS_DIR } from './client/config';
 import authRouter from './client/routes/auth.routes';
 import boardRouter from './client/routes/board.routes';
 import dbInit from './db';
+import dbInit2 from './db2';
 import authenticate from './middlewares/auth.middleware';
 import { errorHandler } from './middlewares/error.middleware';
 
@@ -19,8 +23,6 @@ declare global {
         }
     }
 }
-
-process.env.TZ = '+07:00';
 
 const app: Express = express();
 
@@ -33,6 +35,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
+
+console.log(new Date().toString());
 
 const PORT = parseInt(process.env.NODE_PORT as string) || 5000;
 app.listen(PORT, () => {
@@ -49,4 +53,4 @@ app.use('/', authenticate, boardRouter);
 app.use(errorHandler);
 
 dbInit();
-// dbInit2();
+dbInit2();

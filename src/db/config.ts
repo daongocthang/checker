@@ -1,8 +1,4 @@
-import * as dotenv from 'dotenv';
 import { Dialect, Op, Sequelize } from 'sequelize';
-
-dotenv.config();
-console.log(new Date());
 
 const operatorsAliases = {
     $like: Op.like,
@@ -28,6 +24,7 @@ const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
         idle: 10000,
     },
     operatorsAliases,
+    timezone: '+07:00',
 });
 
 export default sequelizeConnection;

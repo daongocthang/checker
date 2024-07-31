@@ -142,6 +142,7 @@ class TransController {
         if (rows.length == 0) {
             throw new Error('No data found');
         }
+
         count = isNumeric(count) ? parseInt(count) : undefined;
         const payload = await updateAllSuggestions(rows, count, inverse);
         await Promise.all(payload.map((x) => transService.update(x.id, x)));

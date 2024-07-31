@@ -64,6 +64,7 @@ $('#suggest').click(() => {
     var root = $('#suggest').parents('.input-group');
     var inverse = root.find('input[type="checkbox"]').is(':checked');
     var count = root.find('input[type="text"]').val();
+    var msg = $('#suggestMsg');
     const formData = { inverse, count };
 
     $.ajax({
@@ -75,12 +76,13 @@ $('#suggest').click(() => {
         },
         complete: () => {
             $('#loader').modal('hide');
+            msg.removeClass('d-none');
         },
         success: (res) => {
-            toast({ ...res, type: 'success' });
+            msg.text(`[ ${new Date().toLocaleString()} ] Cập nhật thành công`);
         },
         error: () => {
-            toast({ message: 'No data found', type: 'error' });
+            msg.text(`[ ${new Date().toLocaleString()} ] Không tìm thấy dữ liệu`);
         },
     });
 });

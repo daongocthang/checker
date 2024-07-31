@@ -8,7 +8,7 @@
             <div class="input-group w-75">
                 <div class="input-group-prepend">
                     <div class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="inverse">
-                        <input type="checkbox" id="chkInverse" checked aria-label="inverse" />
+                        <input type="checkbox" checked aria-label="inverse" />
                     </div>
                 </div>
                 <input type="text" class="form-control" placeholder="số lượng test" aria-label="test" />
@@ -26,8 +26,8 @@
             <input type="file" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="uploadXlsxFile('/api/v1/trans/uploads',this)" />
         </label>
     </div>
-    <div class="d-flex justify-content-end">
-        <p><i class="fa fa-warning text-warning"></i> Lưu ý nhập sẽ khá lâu</p>
+    <div class="d-flex" style="min-height: 22px">
+        <p class="text-danger d-none ml-2" id="suggestMsg"><i class="fa fa-warning text-warning"></i> Lưu ý nhập sẽ khá lâu</p>
     </div>
 
     <!-- Search Box -->
