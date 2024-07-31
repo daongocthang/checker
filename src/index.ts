@@ -9,7 +9,6 @@ import { STATIC_DIR, VIEWS_DIR } from './client/config';
 import authRouter from './client/routes/auth.routes';
 import boardRouter from './client/routes/board.routes';
 import dbInit from './db';
-import dbInit2 from './db2';
 import authenticate from './middlewares/auth.middleware';
 import { errorHandler } from './middlewares/error.middleware';
 
@@ -20,6 +19,8 @@ declare global {
         }
     }
 }
+
+process.env.TZ = '+07:00';
 
 const app: Express = express();
 
@@ -48,4 +49,4 @@ app.use('/', authenticate, boardRouter);
 app.use(errorHandler);
 
 dbInit();
-dbInit2();
+// dbInit2();

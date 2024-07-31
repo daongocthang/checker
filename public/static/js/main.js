@@ -62,8 +62,25 @@ $('#migration').click(() => {
 
 $('#suggest').click(() => {
     var root = $('#suggest').parents('.input-group');
-    var inverse = $('input[type="checkbox"]').is(':checked');
+    var inverse = root.find('input[type="checkbox"]').is(':checked');
     var count = root.find('input[type="text"]').val();
+    const formData = { inverse, count };
 
-    console.log(inverse, $.isNumeric(count) ? parseInt(count) : 9999);
+    $.ajax({
+        url: 'api/v1/trans/suggests',
+        data: formData,
+        type: 'post',
+        beforeSend: () => {
+            $('#loader').modal('show');
+        },
+        complete: () => {
+            $('#loader').modal('hide');
+        },
+        success: (res) => {
+            toast({ ...res, type: 'success' });
+        },
+        error: () => {
+            toast({ message: 'No data found', type: 'error' });
+        },
+    });
 });

@@ -92,17 +92,19 @@ export const suggest = (s: string, adapter: Adapter<wnty.Suggestion>): string =>
     if (!adapter) return 'unknown';
 
     const suggestion = adapter.find((item) => s.includes(item.id));
-    return suggestion ? suggestion.action : 'deprecated';
+    return suggestion ? suggestion.action : 'lỗi thời';
 };
 
-export const makeSuggestion = async (rows: wnty.Transaction[], size: number = 9999, inverse: boolean = true) => {
+export const updateAllSuggestions = async (rows: wnty.Transaction[], size: number = 9999, inverse: boolean = true) => {
     const adapter: Adapter<wnty.Suggestion> = await suggestionService.findAll();
     rows.forEach((x) => (x.suggestion = x.expired ? suggest(x.model, adapter) : 'test'));
 
     const filteredRows = rows.filter((x) => x.suggestion == 'dồn dịch');
     const fixedSize = Math.min(size, filteredRows.length);
     let count = inverse ? filteredRows.length - fixedSize : fixedSize;
-    while (count-- >= 0) {
+    console.log(inverse, size, fixedSize, count);
+
+    while (count-- > 0) {
         let i = random(filteredRows.length);
         let trans = filteredRows.splice(i, 1)[0];
 

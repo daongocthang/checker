@@ -3,9 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
+import { isNumeric } from '../../utils';
 import { currentDate, currentTimeMillis } from '../../utils/time.uitl';
 import { UPLOADS_DIR } from '../config';
-import transService, { exportXlsxFile, makeSuggestion, readAndFitler, updateExpiredAll } from '../services/trans.service';
+import transService, { exportXlsxFile, readAndFitler, updateAllSuggestions, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
 import { handleSingleUpload } from './handlers';
 
@@ -25,7 +26,7 @@ class TransController {
             }
 
             // TODAO: make suggestion
-            const updated = await makeSuggestion(await updateExpiredAll(rows));
+            const updated = await updateAllSuggestions(await updateExpiredAll(rows));
             await transService.bulkCreate(updated);
 
             res.status(200).send({
@@ -112,7 +113,6 @@ class TransController {
                 $gte: new Date(new Date().setUTCHours(0, 0, 0, 0)),
             },
         });
-        console.log(rows);
 
         if (rows.length == 0) {
             throw new Error('No Data Found');
@@ -129,15 +129,21 @@ class TransController {
         });
     };
 
-    suggests = async (req: Request, res: Response) => {
-        const { inverse, count } = req.body;
+    suggest = async (req: Request, res: Response) => {
+        const inverse = JSON.parse(req.body.inverse);
+        let count = req.body.count;
+
         const rows = await transService.findAll({
             updatedAt: {
                 $gte: currentDate(),
             },
         });
 
-        const payload = await makeSuggestion(rows, count ?? 9999, inverse ?? true);
+        if (rows.length == 0) {
+            throw new Error('No data found');
+        }
+        count = isNumeric(count) ? parseInt(count) : undefined;
+        const payload = await updateAllSuggestions(rows, count, inverse);
         await Promise.all(payload.map((x) => transService.update(x.id, x)));
 
         res.status(200).send({ message: 'Updated all suggestions successfully.' });
