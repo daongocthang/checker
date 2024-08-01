@@ -24,7 +24,7 @@ class TransDAL implements CRUD<TransAttrs, TransModel> {
         return await TransModel.findByPk(id);
     }
     async findOne(constraints?: WhereOptions): Promise<TransModel | null> {
-        return await TransModel.findOne({ where: constraints ?? {} });
+        return await TransModel.findOne({ where: constraints ?? {}, order: [['createdAt', 'DESC']] });
     }
     async findAll(constraints?: WhereOptions): Promise<TransModel[]> {
         return await TransModel.findAll({ where: constraints ?? {} });

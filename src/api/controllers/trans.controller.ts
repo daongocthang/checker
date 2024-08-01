@@ -32,7 +32,7 @@ class TransController {
             res.status(200).send({
                 message: 'Upload the file complete',
                 count: await transService.count({
-                    updatedAt: { $gte: currentDate() },
+                    createdAt: { $gte: currentDate() },
                 }),
             });
         };
@@ -107,7 +107,7 @@ class TransController {
     download = async (req: Request, res: Response) => {
         const rows = await transService.findAll({
             updatedAt: {
-                $gte: new Date(new Date().setUTCHours(0, 0, 0, 0)),
+                $gte: currentDate(),
             },
         });
 
