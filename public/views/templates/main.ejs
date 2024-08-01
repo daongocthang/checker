@@ -27,7 +27,7 @@
         </label>
     </div>
     <div class="d-flex" style="min-height: 22px">
-        <p class="text-danger d-none ml-2" id="suggestMsg"><i class="fa fa-warning text-warning"></i> Lưu ý nhập sẽ khá lâu</p>
+        <p class="text-danger d-none ml-2" id="suggestMsg"><i class="fa fa-warning text-warning"></i></p>
     </div>
 
     <!-- Search Box -->
@@ -44,7 +44,7 @@
         </form>
         <div class="d-flex justify-content-center">
             <div class="w-25 text-right py-2">
-                <i class="fa fa-cube text-danger"></i> <span id="checked"><%= checked.toLocaleString() %></span> / <span id="total"><%= total.toLocaleString() %></span>
+                <i class="fa fa-cube text-danger"></i> <span id="checked"><%= checked.toLocaleString() %></span> / <span id="total" class="text-primary">+<%= total.toLocaleString() %></span>
             </div>
         </div>
     </div>

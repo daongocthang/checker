@@ -52,9 +52,6 @@ class TransController {
         }
 
         const data = await transService.findOne({
-            updatedAt: {
-                $gte: currentDate(),
-            },
             serial,
         });
         if (!data) throw new Error('Not found');

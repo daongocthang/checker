@@ -4,7 +4,7 @@ import TransModel, { TransAttrs } from '../models/trans.model';
 
 class TransDAL implements CRUD<TransAttrs, TransModel> {
     async bulkCreate(payload: TransAttrs[]): Promise<void> {
-        await TransModel.bulkCreate(payload, { updateOnDuplicate: ['expired', 'updatedAt', 'suggestion'] });
+        await TransModel.bulkCreate(payload, { updateOnDuplicate: ['expired', 'suggestion'] });
     }
     async count(constraints?: WhereOptions): Promise<number> {
         return await TransModel.count({ where: constraints ?? {}, col: 'id', distinct: true });

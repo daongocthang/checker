@@ -3,23 +3,23 @@ import categoryService from '../../api/services/category.service';
 import suggestionService from '../../api/services/suggestion.service';
 import transService from '../../api/services/trans.service';
 import { AuthenticationError } from '../../middlewares/error.middleware';
+import { currentDate } from '../../utils/time.uitl';
 
 export const home = async (req: Request, res: Response) => {
     const userId = req.user?.id;
-    const strptime: Date = new Date(new Date().setUTCHours(0, 0, 0, 0));
     if (!userId) {
         throw new AuthenticationError('User is not available');
     }
 
     const checked = await transService.count({
         updatedAt: {
-            $gte: strptime,
+            $gte: currentDate(),
         },
         userId: userId,
     });
     const total = await transService.count({
-        updatedAt: {
-            $gte: strptime,
+        createdAt: {
+            $gte: currentDate(),
         },
     });
 
