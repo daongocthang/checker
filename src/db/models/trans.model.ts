@@ -12,6 +12,7 @@ export type TransAttrs = {
     userId: ForeignKey<UserModel['id']>;
     status?: string;
 
+    visitedAt?: Date;
     createdAt?: Date;
     updatedAt?: Date;
 };
@@ -30,6 +31,7 @@ class TransModel extends Model<TransAttrs, TransCreation> implements TransAttrs 
     declare status: string;
 
     // timestamp
+    declare readonly visitedAt: Date;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 }
@@ -49,6 +51,7 @@ TransModel.init(
         description: DataTypes.TEXT,
         expired: { type: DataTypes.BOOLEAN, defaultValue: true },
         suggestion: DataTypes.STRING,
+        visitedAt: DataTypes.DATE,
     },
     {
         sequelize: sequelizeConnection,

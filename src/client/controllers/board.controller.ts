@@ -12,7 +12,7 @@ export const home = async (req: Request, res: Response) => {
     }
 
     const checked = await transService.count({
-        updatedAt: {
+        visitedAt: {
             $gte: currentDate(),
         },
         userId: userId,

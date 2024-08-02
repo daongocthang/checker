@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
+import moment from 'moment';
 import path from 'path';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
@@ -57,10 +58,11 @@ class TransController {
         if (!data) throw new Error('Not found');
 
         data.userId = userId;
+        data.visitedAt = new Date();
         await transService.update(data.id, data);
 
         const checked = await transService.count({
-            updatedAt: {
+            visitedAt: {
                 $gte: currentDate(),
             },
             userId: userId,
@@ -86,7 +88,7 @@ class TransController {
         }
 
         const data = await transService.findAll({
-            updatedAt: {
+            visitedAt: {
                 $gte: currentDate(),
             },
             userId,
@@ -107,7 +109,7 @@ class TransController {
     download = async (req: Request, res: Response) => {
         const rows = await transService.findAll({
             updatedAt: {
-                $gte: currentDate(),
+                $gte: moment().subtract(3, 'days').toDate(),
             },
         });
 
@@ -131,8 +133,8 @@ class TransController {
         let count = req.body.count;
 
         const rows = await transService.findAll({
-            updatedAt: {
-                $gte: currentDate(),
+            createdAt: {
+                $gte: moment().subtract(3, 'days').toDate(),
             },
         });
 

@@ -31,6 +31,7 @@ const toTransaction = (trans: TransResult): wnty.Transaction => {
         userId: trans.userId,
         suggestion: trans.suggestion,
 
+        visitedAt: trans.visitedAt,
         createdAt: trans.createdAt,
         updatedAt: trans.updatedAt,
     };

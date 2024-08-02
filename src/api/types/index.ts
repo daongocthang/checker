@@ -42,6 +42,7 @@ export namespace Warranty {
         userId: number;
         suggestion: string;
 
+        visitedAt: Date;
         createdAt: Date;
         updatedAt: Date;
     };
