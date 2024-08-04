@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
-import moment from 'moment';
 import path from 'path';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
 import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
 import { isNumeric } from '../../utils';
-import { currentDate, currentTimeMillis } from '../../utils/time.uitl';
+import { currentTimeMillis, onlyUTCDate } from '../../utils/time.uitl';
 import { UPLOADS_DIR } from '../config';
 import transService, { exportXlsxFile, readAndFitler, updateAllSuggestions, updateExpiredAll } from '../services/trans.service';
 import { API } from '../types';
@@ -22,18 +21,25 @@ class TransController {
 
         const cb: API.FileCallback = async (file: Express.Multer.File) => {
             const rows = await readAndFitler(file.filename);
-            if (rows.length == 0) {
+            if (rows.length === 0) {
                 throw new Error();
             }
 
-            // TODAO: make suggestion
+            // Update with expired and suggestion
             const updated = await updateAllSuggestions(await updateExpiredAll(rows));
+
+            // Remove if not user
+            await transService.remove({
+                userId: null,
+            });
+
+            // Bulk create
             await transService.bulkCreate(updated);
 
             res.status(200).send({
                 message: 'Upload the file complete',
                 count: await transService.count({
-                    createdAt: { $gte: currentDate() },
+                    createdAt: { $gte: onlyUTCDate() },
                 }),
             });
         };
@@ -63,7 +69,7 @@ class TransController {
 
         const checked = await transService.count({
             visitedAt: {
-                $gte: currentDate(),
+                $gte: onlyUTCDate(),
             },
             userId: userId,
         });
@@ -89,11 +95,11 @@ class TransController {
 
         const data = await transService.findAll({
             visitedAt: {
-                $gte: currentDate(),
+                $gte: onlyUTCDate(),
             },
             userId,
         });
-        if (data.length == 0) {
+        if (data.length === 0) {
             throw new Error('Data not found');
         }
 
@@ -108,12 +114,12 @@ class TransController {
 
     download = async (req: Request, res: Response) => {
         const rows = await transService.findAll({
-            updatedAt: {
-                $gte: moment().subtract(3, 'days').toDate(),
+            createdAt: {
+                $gte: onlyUTCDate(),
             },
         });
 
-        if (rows.length == 0) {
+        if (rows.length === 0) {
             throw new Error('No Data Found');
         }
 
@@ -133,12 +139,10 @@ class TransController {
         let count = req.body.count;
 
         const rows = await transService.findAll({
-            createdAt: {
-                $gte: moment().subtract(3, 'days').toDate(),
-            },
+            createdAt: { $gte: onlyUTCDate() },
         });
 
-        if (rows.length == 0) {
+        if (rows.length === 0) {
             throw new Error('No data found');
         }
 

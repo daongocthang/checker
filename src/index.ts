@@ -6,7 +6,6 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import 'express-async-errors';
-import moment from 'moment';
 import apiRouter from './api/routes';
 import { User } from './api/types';
 import { STATIC_DIR, VIEWS_DIR } from './client/config';
@@ -25,7 +24,7 @@ declare global {
     }
 }
 
-console.log(moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate());
+console.log(new Date());
 
 const app: Express = express();
 

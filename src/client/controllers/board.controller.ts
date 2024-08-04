@@ -3,7 +3,7 @@ import categoryService from '../../api/services/category.service';
 import suggestionService from '../../api/services/suggestion.service';
 import transService from '../../api/services/trans.service';
 import { AuthenticationError } from '../../middlewares/error.middleware';
-import { currentDate } from '../../utils/time.uitl';
+import { onlyUTCDate } from '../../utils/time.uitl';
 
 export const home = async (req: Request, res: Response) => {
     const userId = req.user?.id;
@@ -13,13 +13,13 @@ export const home = async (req: Request, res: Response) => {
 
     const checked = await transService.count({
         visitedAt: {
-            $gte: currentDate(),
+            $gte: onlyUTCDate(),
         },
         userId: userId,
     });
     const total = await transService.count({
         createdAt: {
-            $gte: currentDate(),
+            $gte: onlyUTCDate(),
         },
     });
 

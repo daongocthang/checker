@@ -1,2 +1,2 @@
 export const currentTimeMillis = () => new Date().getTime();
-export const currentDate = () => new Date(new Date().setHours(0, 0, 0, 0));
+export const onlyUTCDate = () => new Date(new Date().setUTCHours(-7, 0, 0, 0));
