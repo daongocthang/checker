@@ -1,10 +1,10 @@
 <div class="my-4">
     <!-- File Browser -->
     <div class="d-flex">
-        <div class="mx-2">
+        <div class="<% if(user.isAdmin){%>mx-2<%} else{%>mr-auto<%}%>">
             <a href="/api/v1/trans/downloads" role="button" class="btn btn-outline-secondary"><i class="fa fa-download"></i> Tải đề xuất</a>
         </div>
-        <div class="mr-auto">
+        <div class="<% if(user.isAdmin){%>mr-auto<%} else{%>d-none<%}%>">
             <div class="input-group w-75">
                 <div class="input-group-prepend">
                     <div class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="inverse">
@@ -21,11 +21,12 @@
             <i class="fa fa-exchange"></i> Chuyển dữ liệu
             <input type="button" style="display: none" id="migration" />
         </label>
-        <label class="btn btn-primary">
+        <label class="btn btn-primary <% if(!user.isAdmin){%>d-none<%}%>">
             <i class="fa fa-file-import"></i> Nhập dữ liệu
             <input type="file" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="uploadXlsxFile('/api/v1/trans/uploads',this)" />
         </label>
     </div>
+
     <div class="d-flex" style="min-height: 22px">
         <p class="text-danger d-none ml-2" id="suggestMsg"><i class="fa fa-warning text-warning"></i></p>
     </div>

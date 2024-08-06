@@ -18,6 +18,7 @@ const toUser = (user: UserResult): User => {
     return {
         id: user.id,
         name: user.name,
+        isAdmin: user.isAdmin,
     };
 };
 
