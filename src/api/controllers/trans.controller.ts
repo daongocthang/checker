@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import orderDal, { toOrderAttrs } from '../../db2/order.dal';
-import { AuthenticationError, BadRequestError } from '../../middlewares/error.middleware';
+import { AuthenticationError } from '../../middlewares/error.middleware';
 import { isNumeric } from '../../utils';
 import { currentTimeMillis, onlyUTCDate } from '../../utils/time.uitl';
 import { UPLOADS_DIR } from '../config';
@@ -51,7 +51,7 @@ class TransController {
     findAndUpdate = async (req: Request, res: Response) => {
         const { serial } = req.body;
         if (!serial) {
-            throw new BadRequestError('Not found');
+            throw new Error('Not found');
         }
         const userId = req.user?.id;
         if (!userId) {

@@ -24,7 +24,8 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         req.user = user;
         next();
     } catch (e) {
-        res.redirect('/signin');
+        if (req.xhr) res.status(401).send({ message: 'JWT Expired' });
+        else res.redirect('/signin');
     }
 };
 

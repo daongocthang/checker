@@ -25,11 +25,15 @@ $('#frmSearch').on('submit', (ev) => {
             $('table tbody').append(markup);
             $('#checked').text(checked);
         },
-        error: () => {
-            const markup = `<tr>
-            <td colspan="5" class="text-center text-danger">Không tìm thấy dữ liệu</td>
-            </tr>`;
-            $('table tbody').append(markup);
+        error: (xhr, status, msg) => {
+            if (xhr.status === 401) {
+                location.href = '/';
+            } else {
+                const markup = `<tr>
+                <td colspan="5" class="text-center text-danger">Không tìm thấy dữ liệu</td>
+                </tr>`;
+                $('table tbody').append(markup);
+            }
         },
         complete: () => {
             $('#loader').modal('hide');
