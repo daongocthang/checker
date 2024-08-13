@@ -16,11 +16,11 @@ $('#frmSearch').on('submit', (ev) => {
             const markup = `<tr>
             <td class="align-middle">${data.id}</td>
             <td class="align-middle">${data.model}</td>
-            <td class="align-middle">${data.serial}</td>            
-            <td class="align-middle text-primary font-weight-bold text-center text-uppercase">${data.suggestion}</td>
+            <td class="align-middle">${data.serial}</td>
             <td class="align-middle  text-center">
                 <div class="badge badge-${attr} text-uppercase badge--align">${val}</div>
             </td>
+            <td class="align-middle text-primary font-weight-bold text-center text-uppercase">${data.suggestion}</td>
             </tr>`;
             $('table tbody').append(markup);
             $('#checked').text(checked);

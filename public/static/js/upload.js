@@ -13,7 +13,7 @@ const uploadXlsxFile = (url, sel) => {
         success: (res) => {
             if (res.count) {
                 $(sel).parents('.card').find('h1').text(res.count);
-                $('#total').text('+' + res.count);
+                $('#total').text(res.count);
             }
 
             toast({ type: 'success', message: res.message });
