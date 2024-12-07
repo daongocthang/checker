@@ -28,7 +28,9 @@ After installed these packages, featuring version details for each packages, as 
 
 3. Generating tsconfig.json
 
-    `npx tsc --init`
+```sh
+npx tsc --init
+```
 
 By default, the value of this option is set to the root directory. Change it to `dist`, as shown below:
 
