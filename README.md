@@ -9,8 +9,10 @@ npm init -y
 ```
 
 2. Installing TypeScript
-
-`npm i -D typescript @types/express @types/node`
+   
+```sh
+npm i -D typescript @types/express @types/node
+```
 
 After installed these packages, featuring version details for each packages, as shown below:
 
