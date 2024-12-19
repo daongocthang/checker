@@ -1,0 +1,70 @@
+<div class="my-4">
+    <!-- File Browser -->
+    <div class="d-flex">
+        <div class="<% if(user.isAdmin){%>mx-2<%} else{%>mr-auto<%}%>">
+            <a href="/api/v1/trans/downloads" role="button" class="btn btn-outline-secondary"><i class="fa fa-download"></i> Tải đề xuất</a>
+        </div>
+        <div class="<% if(user.isAdmin){%>mr-auto<%} else{%>d-none<%}%>">
+            <div class="input-group w-75">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="inverse">
+                        <input type="checkbox" checked aria-label="inverse" />
+                    </div>
+                </div>
+                <input type="text" class="form-control" placeholder="số lượng test" aria-label="test" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="suggest"><i class="fa fa-dice"></i></button>
+                </div>
+            </div>
+        </div>
+        <label class="btn btn-success mx-2">
+            <i class="fa fa-exchange"></i> Chuyển dữ liệu
+            <input type="button" style="display: none" id="migration" />
+        </label>
+        <label class="btn btn-primary <% if(!user.isAdmin){%>d-none<%}%>">
+            <i class="fa fa-file-import"></i> Nhập dữ liệu
+            <input type="file" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="uploadXlsxFile('/api/v1/trans/uploads',this)" />
+        </label>
+    </div>
+
+    <div class="d-flex" style="min-height: 22px">
+        <p class="text-danger d-none ml-2" id="suggestMsg"><i class="fa fa-warning text-warning"></i></p>
+    </div>
+
+    <!-- Search Box -->
+    <div class="my-5">
+        <form class="d-flex justify-content-center" id="frmSearch">
+            <div class="input-group w-25">
+                <input class="form-control" type="search" placeholder="Search..." name="serial" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex flex-row-reverse">
+        <div class="text-right py-2">
+            <i class="fa fa-cube text-danger"></i> <span id="checked"><%= checked.toLocaleString() %></span> / <span id="total" class="text-primary"><%= total.toLocaleString() %></span>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Phiếu tiếp nhận</th>
+                <th>Mã thiết bị</th>
+                <th>SN</th>
+                <th class="text-center">Bảo hành hãng</th>
+                <th class="text-center">Gợi ý</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="5" class="text-center text-danger">Không tìm thấy dữ liệu</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

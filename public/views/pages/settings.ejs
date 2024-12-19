@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <%- include('../partials/head') %>>
+        <!-- css -->
+        <%- include('../partials/style') %>
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <!-- navbar -->
+        <%- include('../partials/navbar') %>
+        <!-- main -->
+        <main class="container-fluid">
+            <div class="row mt-5">
+                <div class="col-sm"><%- include('../partials/impcard', { amount: counter.categories.toLocaleString(), title:'Mã thiết bị BH hãng' ,name:"categories" })%></div>
+                <div class="col-sm"><%- include('../partials/impcard',{amount: counter.products.toLocaleString(),title:"Serial BH hãng",name:"products"})%></div>
+                <div class="col-sm"><%- include('../partials/impcard',{amount: counter.suggestions.toLocaleString() ,title:"Danh mục đề xuất",name:"suggestions"})%></div>
+            </div>
+
+            <table class="table table-bordered table-striped mt-4"></table>
+            <p class="text-center text-danger" id="error"></p>
+        </main>
+
+        <!-- modal -->
+        <%- include('../partials/dialog') %>
+        <!-- loader -->
+        <%- include('../partials/loader') %>
+        <!-- toast -->
+        <div id="toast"></div>
+        <%- include('../partials/footer') %>
+        <!-- sctips -->
+        <%- include('../partials/script') %>
+        <script src="/js/settings.js"></script>
+    </body>
+</html>

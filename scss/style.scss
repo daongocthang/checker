@@ -1,0 +1,18 @@
+@import url('/css/toast.css');
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.badge--align {
+    padding-inline: 1.5em; /*horizontal padding*/
+    padding-block: 0.8em !important; /*vertical padding */
+}
+
+.content__align--end {
+    display: flex;
+    flex-direction: column;
+}
